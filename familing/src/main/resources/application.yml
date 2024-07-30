@@ -1,0 +1,78 @@
+spring:
+  profiles:
+    default: local
+    active: mongo
+
+  datasource:
+    url: jdbc:h2:mem:~/familing
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+  h2:
+    console:
+      enabled: true  # H2 콘솔 활성화
+      path: /h2-console  # H2 콘솔 경로 설정
+
+  jwt:
+    secret: "vmfhaltmskdlstkfkdgodyroqkfwkdbalroqkfwkdbalaaaaaaaaaaaaaaaabbbbb"
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-name: "kakao"
+            client-id: "457176480b65c5c9ffe60bcd2202d3a3"
+#            client-secret: "457176480b65c5c9ffe60bcd2202d3a3"
+            redirect-uri: "http://localhost:8080/login/oauth2/code/kakao"
+            authorization-grant-type: "authorization_code"
+#            scope:
+#              - "name"
+        provider:
+          kakao:
+            authorization-uri: "https://kauth.kakao.com/oauth/authorize"
+            token-uri: "https://kauth.kakao.com/oauth/token"
+            user-info-uri: "https://kapi.kakao.com/v2/user/me"
+            user-name-attribute: "id"
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true # (2.5~) Hibernate 초기화 이후 data.sql을 실행시켜 줘 (false로 할 경우 Hibernate 초기화 이전에 실행 되어서 ddl 실행 이전에 실행 돼 오류 발생)
+
+  h2:
+    console:
+      enabled: true
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  sql:
+    init:
+      mode: never # init sql 실행 x 우리가 만들어서 한다.

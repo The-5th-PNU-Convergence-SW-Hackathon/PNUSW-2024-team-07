@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat</title>
+</head>
+<body>
+<h1>WebSocket Chat</h1>
+<div id="chat">
+    <div id="messages" style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll;"></div>
+    <input type="text" id="messageInput" placeholder="Enter your message here">
+    <button id="sendButton">Send</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+<script>
+    let stompClient = null;
+    console.log("hello1")
+    function connect() {
+        fetch('/chatroom/user', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("hello2")
+                if (data.success) {
+                    // chatRoomId 가져오기
+                    const chatRoomId = data.result.chatRoomId;
+                    console.log(chatRoomId)
+                    // WebSocket 연결 설정
+                    const socket = new SockJS('/ws');
+                    stompClient = Stomp.over(socket);
+
+                    // 연결 시도
+                    stompClient.connect({}, function (frame) {
+                        console.log('Connected: ' + frame);
+                        console.log(chatRoomId)
+                        // 구독 성공 로그
+                        stompClient.subscribe(`/sub/${chatRoomId}`, function (message) {
+                            console.log('Received: ', message.body);
+                            showMessage(JSON.parse(message.body));
+                        });
+                    }, function (error) {
+                        console.error('Connection error: ' + error);
+                    });
+                } else {
+                    console.error('Failed to get chatRoomId or invalid response:', data);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching chat room info:', error);
+            });
+    }
+
+    function sendMessage() {
+        const messageContent = document.getElementById('messageInput').value.trim();
+        if (messageContent && stompClient) {
+            const message = {
+                id: generateId(), // unique id 생성 함수
+                chatRoomId: 1, // 예시 채팅방 ID
+                chatId: 1, // 예시 채팅 ID
+                contentType: "text", // 예시 콘텐츠 타입
+                content: messageContent,
+                senderUsername: "박준형", // 예시 사용자 이름
+                senderNickname: "박준형", // 예시 사용자 닉네임
+                senderId: 1, // 예시 사용자 ID
+                sendTime: new Date().getTime() // 현재 시간
+            };
+            console.log('Sending: ', message);
+            stompClient.send("/pub/message", {}, JSON.stringify(message));
+            document.getElementById('messageInput').value = '';
+        }
+    }
+
+    function showMessage(message) {
+        const messageElement = document.createElement('div');
+        messageElement.innerHTML = `<strong>${message.senderNickname}</strong>: ${message.content}`;
+        document.getElementById('messages').appendChild(messageElement);
+    }
+
+    function generateId() {
+        return '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    document.getElementById('sendButton').addEventListener('click', sendMessage);
+    connect();
+</script>
+</body>
+</html>

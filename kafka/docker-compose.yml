@@ -1,0 +1,32 @@
+# compose 파일 버전
+version: '3'
+services:
+  # 서비스 명
+  zookeeper:
+    # 사용할 이미지
+    image: wurstmeister/zookeeper
+    # 컨테이너명 설정
+    container_name: zookeeper
+    # 접근 포트 설정 (컨테이너 외부:컨테이너 내부)
+    ports:
+      - "2181:2181"
+  # 서비스 명
+  kafka:
+    # 사용할 이미지
+    image: wurstmeister/kafka
+    # 컨테이너명 설정
+    container_name: kafka
+    # 접근 포트 설정 (컨테이너 외부:컨테이너 내부)
+    ports:
+      - "9092:9092"
+    # 환경 변수 설정
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_CREATE_TOPICS: "Topic:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    # 볼륨 설정
+    volumes:
+      - /var/run/docker.sock
+    # 의존 관계 설정
+    depends_on:
+      - zookeeper
