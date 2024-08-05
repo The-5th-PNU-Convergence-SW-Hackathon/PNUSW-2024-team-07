@@ -8,7 +8,7 @@
 <br/>
 
 
-## 1. 레파지토리 생성
+## 1. 레파지토리 생성하기
 - [https://classroom.github.com/a/mrBmI_GF](https://classroom.github.com/a/mrBmI_GF)
 - 위 Github Classroom 링크에 접속해 본인 조의 github 레파지토리를 생성하세요.
 <img src="https://github.com/pnuswedu/SW-Hackathon-2024/assets/34933690/a1e1403b-eeb5-40f1-b2a3-83f5d640a369" width="600px" alt="Classroom에서 team 생성" />
