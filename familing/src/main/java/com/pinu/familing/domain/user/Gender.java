@@ -11,6 +11,7 @@ public enum Gender {
     GIRL("여자");
 
     private final String gender;
+
     @JsonValue
     public String getGender() {
         return gender;

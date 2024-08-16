@@ -38,7 +38,7 @@ public class ListenerConfiguration {
         Map<String, Object> consumerConfigurations =
                 ImmutableMap.<String, Object>builder()
                         //Kafka 클러스터의 주소를 설정합니다.
-                        .put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")
+                        .put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "20.196.64.166:9092")
                         //이 그룹 ID는 Consumer가 동일한 그룹 내에서 협력하여 메시지를 처리하도록 합니다.
                         .put(ConsumerConfig.GROUP_ID_CONFIG, "familing")
                         //afka에서 수신한 메시지의 키를 역직렬화하는 데 사용됩니다.

@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>WebSocket Chat</title>
 </head>
 <body>
 <h1>WebSocket Chat</h1>
 <div id="chat">
     <div id="messages" style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll;"></div>
-    <input type="text" id="messageInput" placeholder="Enter your message here">
+    <input id="messageInput" placeholder="Enter your message here" type="text">
     <button id="sendButton">Send</button>
 </div>
 
@@ -18,8 +18,9 @@
 <script>
     let stompClient = null;
     console.log("hello1")
+
     function connect() {
-        fetch('/chatroom/user', {
+        fetch('/api/v1/chatroom/user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -27,7 +28,6 @@
         })
             .then(response => response.json())
             .then(data => {
-                console.log("hello2")
                 if (data.success) {
                     // chatRoomId 가져오기
                     const chatRoomId = data.result.chatRoomId;

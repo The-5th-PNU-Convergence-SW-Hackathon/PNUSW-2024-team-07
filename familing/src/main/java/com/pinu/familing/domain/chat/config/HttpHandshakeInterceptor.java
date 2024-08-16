@@ -3,7 +3,6 @@ package com.pinu.familing.domain.chat.config;
 import com.pinu.familing.domain.user.entity.User;
 import com.pinu.familing.domain.user.repository.UserRepository;
 import com.pinu.familing.global.error.CustomException;
-import com.pinu.familing.global.error.ExceptionCode;
 import com.pinu.familing.global.jwt.JWTUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +19,6 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
 
 import static com.pinu.familing.global.error.ExceptionCode.USER_NOT_FOUND;
 
@@ -29,9 +27,8 @@ import static com.pinu.familing.global.error.ExceptionCode.USER_NOT_FOUND;
 @Slf4j
 public class HttpHandshakeInterceptor implements HandshakeInterceptor {
 
-    private final JWTUtil jwtUtil;
-
     private static final String ERROR_MESSAGE = "웹소켓 연결 오류!!";
+    private final JWTUtil jwtUtil;
     private final UserRepository userRepository;
 
 

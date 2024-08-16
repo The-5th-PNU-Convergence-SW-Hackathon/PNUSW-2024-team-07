@@ -58,6 +58,9 @@ dependencies {
 	implementation 'com.google.guava:guava:32.0.0-android'
 	//validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	//s3
+	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.453' // 최신 버전으로 대체 가능
+
 
 }
 

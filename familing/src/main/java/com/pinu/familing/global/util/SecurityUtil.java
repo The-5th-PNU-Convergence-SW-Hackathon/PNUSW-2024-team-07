@@ -2,7 +2,6 @@ package com.pinu.familing.global.util;
 
 import com.pinu.familing.global.error.CustomException;
 import com.pinu.familing.global.oauth.dto.CustomOAuth2User;
-import io.jsonwebtoken.Jwts;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

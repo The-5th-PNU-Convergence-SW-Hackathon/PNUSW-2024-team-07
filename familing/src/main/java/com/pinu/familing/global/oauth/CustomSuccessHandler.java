@@ -38,25 +38,24 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
-        String token = jwtUtil.createJwt(username, role, 60*60*60L);
+        String token = jwtUtil.createJwt(username, role, 60 * 60 * 60 * 60L);
 
         response.addCookie(createCookie("Authorization", token));
         // 로그인 성공 후 Redirect 주소
-
-//        if ("ROLE_PENDING_USER".equals(role)) { // Oauth만 인증되고 추가적인 요청 필요
-//            response.sendRedirect("http://localhost:8080/user");
-//        } else if ("ROLE_USER".equals(role)) { // 회원가입 완료
-//            response.sendRedirect("http://localhost:8080/user");
-//        } else {
-//            //Role이 없으면 다시 로그인 창으로
-//            response.sendRedirect("http://localhost:8080/oauth2/authorization/kakao");
-//        }
+        if ("ROLE_PENDING_USER".equals(role)) { // Oauth만 인증되고 추가적인 요청 필요
+            response.sendRedirect("myapp://auth/login");
+        } else if ("ROLE_USER".equals(role)) { // 회원가입 완료
+            response.sendRedirect("myapp://callback/register-screen1");
+        } else {
+            //Role이 없으면 다시 로그인 창으로
+            response.sendRedirect("http://13.124.211.43/oauth2/authorization/kakao");
+        }
     }
 
     private Cookie createCookie(String key, String value) {
 
         Cookie cookie = new Cookie(key, value);
-        cookie.setMaxAge(60*60*60);
+        cookie.setMaxAge(60 * 60 * 60);
         // https only
         //cookie.setSecure(true);
         //쿠기가 보일 위치

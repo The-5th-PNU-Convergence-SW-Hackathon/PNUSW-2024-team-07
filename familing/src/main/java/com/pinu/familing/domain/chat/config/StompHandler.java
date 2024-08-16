@@ -1,6 +1,5 @@
 package com.pinu.familing.domain.chat.config;
 
-import com.google.common.net.HttpHeaders;
 import com.pinu.familing.domain.chat.service.ChatService;
 import com.pinu.familing.global.error.CustomException;
 import com.pinu.familing.global.jwt.JWTUtil;

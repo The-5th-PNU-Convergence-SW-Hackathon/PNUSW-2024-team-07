@@ -16,7 +16,7 @@ public class ApiUtils {
     }
 
     public static ApiResult<?> error(String message, HttpStatus httpStatus) {
-        return new ApiResult<>(false, httpStatus.value(),  message, null);
+        return new ApiResult<>(false, httpStatus.value(), message, null);
     }
 
 

@@ -2,7 +2,7 @@ package com.pinu.familing.global.oauth.dto;
 
 import java.util.Map;
 
-public record KakaoResponse(Map<String, Object> attribute) implements OAuth2Response{
+public record KakaoResponse(Map<String, Object> attribute) implements OAuth2Response {
 
     @Override
     public String getProvider() {

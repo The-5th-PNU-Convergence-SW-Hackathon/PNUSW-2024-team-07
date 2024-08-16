@@ -32,28 +32,27 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         OAuth2Response oAuth2Response = null;
         if (registrationId.equals("kakao")) {
             oAuth2Response = new KakaoResponse(oAuth2User.getAttributes());
-        }
-        else {
+        } else {
             System.out.println("else service");
             return null;
         }
 
         //리소스 서버에서 발급 받은 정보로 사용자를 특정할 아이디값을 만듬
-        String username = oAuth2Response.getProvider()+" "+oAuth2Response.getProviderId();
+        String username = oAuth2Response.getProvider() + " " + oAuth2Response.getProviderId();
 
         Optional<User> existUser = userRepository.findByUsername(username);
 
         if (existUser.isEmpty()) { // 새로운 유저 생성
             userRepository.save(User.builder()
                     .username(username)
-                    .nickname("user")
+                    .nickname(oAuth2Response.getOAuthName())
+                    .realname(oAuth2Response.getOAuthName())
                     .role("ROLE_PENDING_USER")
                     .build());
-            UserDto userDTO = new UserDto(username, "user", "ROLE_PENDING_USER");
+            UserDto userDTO = new UserDto(username, oAuth2Response.getOAuthName(), "ROLE_PENDING_USER");
             System.out.println("userDTO = " + userDTO);
             return new CustomOAuth2User(userDTO);
-        }
-        else { // 기존 유저
+        } else { // 기존 유저
             return new CustomOAuth2User(new UserDto(existUser.get().getUsername(), existUser.get().getNickname(), existUser.get().getRole()));
         }
 
