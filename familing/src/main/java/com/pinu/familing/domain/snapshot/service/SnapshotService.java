@@ -6,22 +6,23 @@ import com.pinu.familing.domain.snapshot.dto.SnapshotImageRequest;
 import com.pinu.familing.domain.snapshot.dto.SnapshotResponse;
 import com.pinu.familing.domain.snapshot.entity.Snapshot;
 import com.pinu.familing.domain.snapshot.entity.SnapshotImage;
-import com.pinu.familing.domain.snapshot.entity.SnapshotTitle;
 import com.pinu.familing.domain.snapshot.repository.SnapshotImageRepository;
 import com.pinu.familing.domain.snapshot.repository.SnapshotRepository;
 import com.pinu.familing.domain.user.entity.User;
 import com.pinu.familing.domain.user.repository.UserRepository;
 import com.pinu.familing.global.error.CustomException;
 import com.pinu.familing.global.error.ExceptionCode;
+import com.pinu.familing.global.s3.AwsS3Service;
+import com.pinu.familing.global.s3.S3ImgDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,110 +32,91 @@ public class SnapshotService {
     private final SnapshotRepository snapshotRepository;
     private final UserRepository userRepository;
     private final TitleService titleService;
-    private final FamilyRepository familyRepository;
+    private final AwsS3Service awsS3Service;
 
 
-    //스냅샷에 이미지 등록하기
+    // 스냅샷에 이미지 등록하기 (스냅샷 이미지가 없으면 생성)
     @Transactional
-    public void registerSnapshotImage(LocalDate day, String username, SnapshotImageRequest snapshotImageRequest) {
+    public void registerSnapshotImage(LocalDate day, String username, MultipartFile requestSnapshotImg) {
         User user = getUser(username);
+        Snapshot snapshot = snapshotRepository.findByFamilyAndDate(user.getFamily(), day)
+                .orElseGet(() -> createSnapshotFamily(user.getFamily(), day));
 
+        S3ImgDto s3ImgDto = awsS3Service.uploadFiles(requestSnapshotImg);
         SnapshotImage snapshotImage = snapshotImageRepository.findByUserAndDate(user, day)
-                .orElseThrow(() -> new CustomException(ExceptionCode.SNAPSHOT_NOT_FOUND));
+                .orElseGet(() -> createSnapshotImage(snapshot, user, day));
 
-        snapshotImage.updateImage(snapshotImageRequest.imageUrl());
+        snapshotImage.updateImage(s3ImgDto.getUploadFileUrl());
     }
 
+    // 스냅샷 페이지 조회
+    @Transactional(readOnly = true)
+    public Page<SnapshotResponse> getSnapshotPage(LocalDate day, Pageable pageable, String username) {
+        Family family = getFamily(username);
+        return snapshotRepository.findAllByFamilyAndDateLessThanEqual(family, day, pageable)
+                .map(snapshot -> new SnapshotResponse(username,snapshot));
+    }
 
-    //스냅샷 엔티티 전체 생성하기
+    // 특정 날짜 스냅샷 조회 (스냅샷이 없으면 생성하고, 가족 구성원 모두의 스냅샷 이미지 생성)
     @Transactional
-    public void createFamilySnapshotEntity(Family family, LocalDate currentDate) {
-        createSnapshotEntity(family, currentDate);
-
-        List<User> familyMembers = userRepository.findAllByFamily(family);
-        familyMembers.forEach(familyMember -> {
-            createSnapshotImageEntity(familyMember, currentDate);
-        });
-    }
-
-
-    //스냅샷 엔티티 생성하기 (개인별 스냅샷도 이때 함께 생성됨.)
-    private void createSnapshotEntity(Family family, LocalDate currentDate) {
-        SnapshotTitle title = titleService.getTitle(currentDate);
-
-        snapshotRepository.save(Snapshot.builder().family(family)
-                .snapshotTitle(title)
-                .date(currentDate)
-                .build());
-
-        System.out.println(family.getFamilyName() + ": 스냅샷 엔티티 생성");
-    }
-
-    private void createSnapshotImageEntity(User user, LocalDate currentDate) {
-        Snapshot snapshot = snapshotRepository.findByFamilyAndDate(user.getFamily(), currentDate)
-                .orElseThrow(() -> new CustomException(ExceptionCode.SNAPSHOT_NOT_FOUND));
-
-        SnapshotImage snapshotImage = new SnapshotImage(snapshot, user, currentDate);
-        snapshotImageRepository.save(snapshotImage);
-        System.out.println(user.getRealname() + ": 스냅샷 이미지 엔티티 생성");
-    }
-
-    //스냅샷 페이지 조회
-    public Page<SnapshotResponse> provideSnapshotPage(LocalDate day, Pageable pageable, String username) {
+    public SnapshotResponse getSnapshotByDate(LocalDate date, String username) {
         Family family = getFamily(username);
-        return snapshotRepository.findAllByFamilyAndDateBefore(family, day, pageable)
-                .map(SnapshotResponse::new);
+        Snapshot snapshot = snapshotRepository.findByFamilyAndDate(family, date)
+                .orElseGet(() -> createSnapshotFamily(family, date));
+        return new SnapshotResponse(username,snapshot);
     }
 
-    //특정 날짜 스냅샷 조회
-    public SnapshotResponse provideSnapshot(LocalDate day, String username) {
-        Family family = getFamily(username);
+    // 스냅샷 엔티티 생성하기
+    private Snapshot createSnapshotFamily(Family family, LocalDate date) {
+        Snapshot snapshot = snapshotRepository.findByFamilyAndDate(family, date)
+                .orElseGet(() -> snapshotRepository.save(
+                        Snapshot.builder()
+                                .snapshotTitle(titleService.getTitle(date))
+                                .family(family)
+                                .date(date)
+                                .build()));
 
-        Snapshot snapshot = snapshotRepository.findByFamilyAndDate(family, day)
-                .orElseThrow(() -> new CustomException(ExceptionCode.SNAPSHOT_NOT_FOUND));
 
-        return new SnapshotResponse(snapshot);
+        family.getUsers().forEach(user -> createSnapshotImage(snapshot, user, date));
+
+        return snapshot;
     }
 
-    //회원가입이나, 가족 등록시에 호출
+    private SnapshotImage createSnapshotImage(Snapshot snapshot, User user, LocalDate date) {
+        SnapshotImage snapshotImage =  snapshotImageRepository.findByUserAndDate(user, date)
+                .orElseGet(() -> snapshotImageRepository.save(
+                        SnapshotImage.builder()
+                                .user(user)
+                                .snapshot(snapshot)
+                                .date(date)
+                                .snapshotImg("EMPTY")
+                                .build())
+                );
+
+        snapshot.addSnapshotImage(snapshotImage);
+        return snapshotImage;
+    }
+
+    public LocalTime getSnapshotAlarmTime(String name) {
+        return getFamily(name).getSnapshotAlarmTime();
+    }
+
+
     @Transactional
-    public void createSnapshotDueToFamilyRegistration(String username) {
-        Family family = getFamily(username);
-        System.out.println("family.getFamilyName() = " + family.getFamilyName());
-        User user = getUser(username);
-        LocalDate currentDate = LocalDate.now();
-
-        if (family.getSnapshotAlarmTime().isAfter(LocalTime.now())) {
-            System.out.println(user.getRealname() + ": 스냅샷 이후에 생성 예정");
-            return;
-        }
-        //스냅샷 저장
-        if (!snapshotRepository.existsByFamilyAndDate(family, currentDate)) {
-            createSnapshotEntity(family, currentDate);
-        }
-
-        //스냅샷 이미지 생성
-        createSnapshotImageEntity(user, currentDate);
+    public void changeAlarmTime(String name, LocalTime targetTime) {
+        getFamily(name).changeSnapshotAlarmTime(targetTime);
     }
+
 
     //유저 값 가져오기
     private Family getFamily(String username) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new CustomException(ExceptionCode.USER_NOT_FOUND));
-        if (user.getFamily() == null) {
-            throw new CustomException(ExceptionCode.FAMILY_NOT_FOUND);
-        }
-
-        return user.getFamily();
+        return getUser(username).getFamily();
     }
 
     private User getUser(String username) {
-        User user = userRepository.findByUsername(username)
+        return userRepository.findByUsername(username)
                 .orElseThrow(() -> new CustomException(ExceptionCode.USER_NOT_FOUND));
-        if (user.getFamily() == null) {
-            throw new CustomException(ExceptionCode.FAMILY_NOT_FOUND);
-        }
-        return user;
     }
+
 }
 

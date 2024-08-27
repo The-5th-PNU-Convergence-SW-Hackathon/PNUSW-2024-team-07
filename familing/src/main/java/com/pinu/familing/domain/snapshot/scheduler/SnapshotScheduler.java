@@ -2,7 +2,6 @@ package com.pinu.familing.domain.snapshot.scheduler;
 
 import com.pinu.familing.domain.family.entity.Family;
 import com.pinu.familing.domain.family.repository.FamilyRepository;
-import com.pinu.familing.domain.snapshot.service.SnapshotAlarmService;
 import com.pinu.familing.domain.snapshot.service.SnapshotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,7 +17,6 @@ import java.util.List;
 public class SnapshotScheduler {
 
     private final FamilyRepository familyRepository;
-    private final SnapshotAlarmService snapshotAlarmService;
     private final SnapshotService snapshotService;
 
     /*
@@ -34,12 +32,6 @@ public class SnapshotScheduler {
      */
 
 
-    // 매 분마다 실행
-    @Scheduled(cron = "0 0 0 * * ?")
-    public void createSnapshotAlarmChangeInBatches() {
-        snapshotAlarmService.changeAllAlarmChangeRequest();
-    }
-
     // 알람 보내기: 매 분마다 실행
     @Scheduled(cron = "0 * * * * ?")
     public void sendSnapshotAlarm() {
@@ -49,8 +41,6 @@ public class SnapshotScheduler {
         // 모든 가족을 가져옴
         List<Family> families = familyRepository.findAllBySnapshotAlarmTime(currentTime);
 
-        //엔티티 생성
-        families.forEach((family) -> snapshotService.createFamilySnapshotEntity(family, currentDate));
 
         for (Family family : families) {
             System.out.println(family.getFamilyName() + ": 알람! ");

@@ -15,5 +15,6 @@ public interface SnapshotRepository extends JpaRepository<Snapshot, Long> {
 
     Optional<Snapshot> findByFamilyAndDate(Family family, LocalDate day);
 
-    Page<Snapshot> findAllByFamilyAndDateBefore(Family family, LocalDate date, Pageable pageable);
+    Page<Snapshot> findAllByFamilyAndDateLessThanEqual(Family family, LocalDate date, Pageable pageable);
+
 }

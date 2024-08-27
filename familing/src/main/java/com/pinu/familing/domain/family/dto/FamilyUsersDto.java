@@ -11,7 +11,7 @@ public record FamilyUsersDto(
 
     public static FamilyUsersDto fromEntity(List<User> users){
         return new FamilyUsersDto(users.stream()
-                .map(user -> new FamilyUserDto(user.getNickname(), user.getImageUrl()))
+                .map(user -> new FamilyUserDto(user.getNickname(), user.getProfileImg()))
                 .toList());
     }
 }

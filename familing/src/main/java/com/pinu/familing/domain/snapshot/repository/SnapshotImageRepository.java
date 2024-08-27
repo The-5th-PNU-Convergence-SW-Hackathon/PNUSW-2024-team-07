@@ -10,4 +10,6 @@ import java.util.Optional;
 
 public interface SnapshotImageRepository extends JpaRepository<SnapshotImage, Long> {
     Optional<SnapshotImage> findByUserAndDate(User user, LocalDate day);
+
+    boolean existsByUserAndDate(User user, LocalDate currentDate);
 }

@@ -37,4 +37,8 @@ public class Snapshot extends BaseEntity {
     @OneToMany(orphanRemoval = true, mappedBy = "snapshot", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<SnapshotImage> snapshotImages = new ArrayList<>();
 
+    public void addSnapshotImage(SnapshotImage snapshotImage) {
+        this.snapshotImages.add(snapshotImage);
+    }
+
 }

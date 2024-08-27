@@ -31,7 +31,8 @@ public class Family {
 
     private int membersNum;
 
-    private LocalTime snapshotAlarmTime;
+    @Builder.Default
+    private LocalTime snapshotAlarmTime=LocalTime.of(12, 0);
 
     public Family(String familyName, String code) {
         this.familyName = familyName;

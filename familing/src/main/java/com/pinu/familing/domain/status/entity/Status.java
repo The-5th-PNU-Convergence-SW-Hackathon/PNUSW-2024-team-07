@@ -1,6 +1,6 @@
-package com.pinu.familing.domain.snapshot.entity;
+package com.pinu.familing.domain.status.entity;
 
-
+import com.pinu.familing.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SnapshotTitle {
+public class Status extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 13)
-    private String title;
+    @Column(unique = true)
+    private String text;
 
 }

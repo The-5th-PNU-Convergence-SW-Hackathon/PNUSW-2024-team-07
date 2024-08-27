@@ -17,7 +17,7 @@ public record UserResponse(String username,
                 user.getUsername(),
                 user.getNickname(),
                 user.getRealname(),
-                user.getImageUrl()
+                user.getProfileImg()
         );
     }
 }
