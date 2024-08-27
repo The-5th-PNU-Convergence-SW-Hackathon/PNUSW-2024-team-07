@@ -1,6 +1,0 @@
-mongodb:
-  client: mongodb://root:1234@127.0.0.1:27017/familing
-  name: familing
-
-kafka:
-  server: localhost:9092

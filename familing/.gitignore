@@ -1,6 +1,6 @@
 ## idea 폴더 추가
 .idea/
-
+*.yml
 HELP.md
 .gradle
 build/
