@@ -1,4 +1,4 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/mrBmI_GF)
+
 # Template for Hackathon
 이 레파지토리는 참여자들이 해커톤 결과물을 위한 레파지토리 생성시에 참고할 내용들을 담고 있습니다.
 1. 레파지토리 생성
@@ -62,12 +62,30 @@
 
 
 ### 2. 상세설계
-#### 2.1. 시스템 구성도
-> 시스템 구성도(infra, front, back등의 node 간의 관계)의 사진을 삽입하세요.
+#### 시스템 구성도
+
+<img width="675" alt="스크린샷 2024-08-30 오후 4 48 23" src="https://github.com/user-attachments/assets/8eb2af42-b79c-4a25-9a81-57cba9ea22fd">
+
+#### ERD
+
+![familing-erd](https://github.com/user-attachments/assets/d5d6ce83-18e1-4165-bc21-a078888bf474)
+
 
 #### 2.1. 사용 기술
 
-![image](https://github.com/pnusw-hackathon/PNUSW-2024-team-07/assets/64734115/edcc056e-fe6f-41b3-bb12-7a2268d252f5)
+| 구분                | 사항(성능)       |
+|---------------------|-----------------|
+| **스프링부트**       | 3.2.5           |
+| **java**            | 17              |
+| **GPT API**         | GPT3.5           |
+| **kafka**           | 2.7.2           |
+| **MySQL**           | 8.0             |
+| **Docker**          | 24.0.5          |
+| **AWS**             | t2.micro, s3, RDS    |
+| **React Native CLI**| 2.0.1           |
+| **Node.js**         | 20.12.0         |
+| **Android Studio**  | 2023.2.1        |
+| **JDK**             | 17              |
 
 
 ### 3. 개발결과
@@ -105,6 +123,8 @@
 > 제품을 설치하고 난 후, 실행 할 수 있는 방법을 작성하세요.
 
 ### 5. 소개 및 시연 영상
+
+
 > 프로젝트에 대한 소개와 시연 영상을 넣으세요.
 > 프로젝트 소개 동영상을 교육원 메일(swedu@pusan.ac.kr)로 제출 이후 센터에서 부여받은 youtube URL주소를 넣으세요.
 
