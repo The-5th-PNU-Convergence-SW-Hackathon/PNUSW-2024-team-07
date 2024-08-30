@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "454111834593",
+    "project_id": "familing-43d6a",
+    "storage_bucket": "familing-43d6a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:454111834593:android:c1bde29ef10262b33fe2a0",
+        "android_client_info": {
+          "package_name": "com.familing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2sSbrysmdnPWUlNRHpWL1c0RiJpX9ArE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
