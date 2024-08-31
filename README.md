@@ -116,6 +116,7 @@
 
 #### 3.4. 디렉토리 구조
 
+```
 ├── familing/
 │   ├── domain/
 │   │   ├── alarm/
@@ -302,6 +303,7 @@
 │   │   │   ├── ConstantUtil
 │   │   │   ├── SecurityUtil
 │   ├── FamilingApplication
+```
 ### 4. 설치 및 사용 방법
 > 제품을 설치하기 위헤 필요한 소프트웨어 및 설치 방법을 작성하세요.
 >
