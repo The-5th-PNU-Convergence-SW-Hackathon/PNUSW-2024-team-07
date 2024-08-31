@@ -115,8 +115,193 @@
 > 노션 링크, 한글 문서, pdf 파일, 구글 스프레드 시트 등...
 
 #### 3.4. 디렉토리 구조
-> 위 레포지토리의 디렉토리 구조를 설명하세요.
 
+├── familing/
+│   ├── domain/
+│   │   ├── alarm/
+│   │   │   ├── controller/
+│   │   │   │   ├── AlarmController
+│   │   │   ├── dto/
+│   │   │   │   ├── AlarmDto
+│   │   │   │   ├── AlarmResponseDto
+│   │   │   ├── entity/
+│   │   │   │   ├── Alarm
+│   │   │   ├── repository/
+│   │   │   │   ├── AlarmRepository
+│   │   │   ├── service/
+│   │   │   │   ├── AlarmService
+│   │   │   │   ├── AlarmType
+│   │   ├── chat/
+│   │   │   ├── config/
+│   │   │   │   ├── HttpHandshakeInterceptor
+│   │   │   │   ├── ListenerConfiguration
+│   │   │   │   ├── ProducerConfig
+│   │   │   │   ├── StompHandler
+│   │   │   ├── controller/
+│   │   │   │   ├── ChatController
+│   │   │   ├── dto/
+│   │   │   │   ├── ChatResponseDto
+│   │   │   │   ├── ChatRoomInfoDto
+│   │   │   │   ├── ChattingHistoryResponseDto
+│   │   │   ├── entity/
+│   │   │   │   ├── ChatRoom
+│   │   │   │   ├── Chatting
+│   │   │   │   ├── Message
+│   │   │   ├── messaging/
+│   │   │   │   ├── MessageReceiver
+│   │   │   │   ├── MessageSender
+│   │   │   ├── repository/
+│   │   │   │   ├── ChatRoomRepository
+│   │   │   │   ├── MongoChatRepository
+│   │   │   ├── service/
+│   │   │   │   ├── ChatService
+│   │   ├── family/
+│   │   │   ├── controller/
+│   │   │   │   ├── FamilyController
+│   │   │   ├── dto/
+│   │   │   │   ├── FamilyCode
+│   │   │   │   ├── FamilyDto
+│   │   │   │   ├── FamilyName
+│   │   │   │   ├── FamilyUserDto
+│   │   │   │   ├── FamilyUsersDto
+│   │   │   │   ├── MyFamilyDto
+│   │   │   ├── entity/
+│   │   │   │   ├── Family
+│   │   │   ├── handler/
+│   │   │   │   ├── FamilyCodeHandler
+│   │   │   ├── repository/
+│   │   │   │   ├── FamilyRepository
+│   │   │   ├── service/
+│   │   │   │   ├── FamilyService
+│   │   ├── gpt/
+│   │   │   ├── config/
+│   │   │   │   ├── ChatGPTConfig
+│   │   │   ├── controller/
+│   │   │   │   ├── ChatGPTController
+│   │   │   ├── dto/
+│   │   │   │   ├── ChatGptRequest
+│   │   │   │   ├── ChatGPTResponse
+│   │   │   │   ├── GptRequestMessage
+│   │   │   │   ├── Prompt
+│   │   ├── lovecard/
+│   │   │   ├── controller/
+│   │   │   │   ├── LovecardController
+│   │   │   ├── dto/
+│   │   │   │   ├── LovecardLogResponse
+│   │   │   │   ├── LovecardRequest
+│   │   │   │   ├── LovecardResponse
+│   │   │   ├── entity/
+│   │   │   │   ├── Lovecard
+│   │   │   │   ├── LovecardLog
+│   │   │   ├── repository/
+│   │   │   │   ├── LovecardLogRepository
+│   │   │   │   ├── LovecardRepository
+│   │   │   ├── service/
+│   │   │   │   ├── LovecardService
+│   │   ├── payment/
+│   │   │   ├── entity/
+│   │   │   │   ├── Payment
+│   │   ├── snapshot/
+│   │   │   ├── controller/
+│   │   │   │   ├── SnapshotController
+│   │   │   ├── dto/
+│   │   │   │   ├── CustomPage
+│   │   │   │   ├── SnapshotImageRequest
+│   │   │   │   ├── SnapshotResponse
+│   │   │   ├── entity/
+│   │   │   │   ├── Snapshot
+│   │   │   │   ├── SnapshotImage
+│   │   │   │   ├── SnapshotTitle
+│   │   │   ├── repository/
+│   │   │   │   ├── SnapshotImageRepository
+│   │   │   │   ├── SnapshotRepository
+│   │   │   │   ├── SnapshotTitleRepository
+│   │   │   ├── scheduler/
+│   │   │   │   ├── SnapshotScheduler
+│   │   │   ├── service/
+│   │   │   │   ├── SnapshotService
+│   │   │   │   ├── TitleService
+│   │   ├── status/
+│   │   │   ├── controller/
+│   │   │   │   ├── StatusController
+│   │   │   ├── dto/
+│   │   │   │   ├── MyFamilyStatusResponse
+│   │   │   │   ├── StatusRequest
+│   │   │   │   ├── StatusResponse
+│   │   │   ├── entity/
+│   │   │   │   ├── Status
+│   │   │   ├── repository/
+│   │   │   │   ├── StatusRepository
+│   │   │   ├── service/
+│   │   │   │   ├── StatusService
+│   │   ├── subscription/
+│   │   │   ├── controller/
+│   │   │   │   ├── SubscriptionController
+│   │   │   ├── dto/
+│   │   │   │   ├── SubscriptionResponse
+│   │   │   ├── entity/
+│   │   │   │   ├── Subscription
+│   │   │   ├── repository/
+│   │   │   │   ├── SubscriptionRepository
+│   │   │   ├── service/
+│   │   │   │   ├── SubscriptionService
+│   │   ├── user/
+│   │   │   ├── controller/
+│   │   │   │   ├── UserController
+│   │   │   ├── dto/
+│   │   │   │   ├── Nickname
+│   │   │   │   ├── Realname
+│   │   │   │   ├── UserDto
+│   │   │   │   ├── UserResponse
+│   │   │   ├── entity/
+│   │   │   │   ├── User
+│   │   │   ├── repository/
+│   │   │   │   ├── UserRepository
+│   │   │   ├── service/
+│   │   │   │   ├── UserService
+│   │   │   │   ├── Gender
+│   ├── global/
+│   │   ├── config/
+│   │   │   ├── CorsMvcConfig
+│   │   │   ├── MongoConfig
+│   │   │   ├── MongoProperties
+│   │   │   ├── SecurityConfig
+│   │   │   ├── WebSocketConfiguration
+│   │   ├── error/
+│   │   │   ├── CustomException
+│   │   │   ├── ExceptionCode
+│   │   │   ├── GlobalExceptionHandler
+│   │   ├── jwt/
+│   │   │   ├── JWTFilter
+│   │   │   ├── JWTUtil
+│   │   ├── oauth/
+│   │   │   ├── controller/
+│   │   │   │   ├── KakaoController
+│   │   │   ├── dto/
+│   │   │   │   ├── AccessToken
+│   │   │   │   ├── CustomOAuth2User
+│   │   │   │   ├── KakaoProfileRequest
+│   │   │   │   ├── KakaoResponse
+│   │   │   │   ├── OAuth2Response
+│   │   │   │   ├── PrincipalDetails
+│   │   │   ├── properties/
+│   │   │   │   ├── KakaoProperties
+│   │   │   ├── service/
+│   │   │   │   ├── CustomOAuth2UserService
+│   │   │   │   ├── KakaoService
+│   │   │   │   ├── PrincipalService
+│   │   │   │   ├── CustomSuccessHandler
+│   │   ├── s3/
+│   │   │   ├── AwsS3Service
+│   │   │   ├── S3Config
+│   │   │   ├── S3Image
+│   │   │   ├── S3ImageRepository
+│   │   │   ├── S3ImgDto
+│   │   ├── util/
+│   │   │   ├── ApiUtils
+│   │   │   ├── ConstantUtil
+│   │   │   ├── SecurityUtil
+│   ├── FamilingApplication
 ### 4. 설치 및 사용 방법
 > 제품을 설치하기 위헤 필요한 소프트웨어 및 설치 방법을 작성하세요.
 >
