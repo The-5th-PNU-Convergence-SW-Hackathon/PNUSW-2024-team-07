@@ -213,66 +213,67 @@ GPT 4o 비용 : 19500원(월)
 
 # 3. 개발결과
 ## 3.1. 전체시스템 흐름도
+![패밀링 화면 흐름도-IA drawio (1)](https://github.com/user-attachments/assets/de50b951-b02c-461c-b10f-6c6b0e98caa4)
 
 
 
 
 ## 3.2. 기능설명
-**로그인**
 
-![패밀링 화면 흐름도-로그인 .drawio (1).png](https://prod-files-secure.s3.us-west-2.amazonaws.com/35fcd473-6b4a-40a8-af94-8368c00155b9/cfbb6fc7-312d-4a36-9fd8-8ec4da9ee2b1/%ED%8C%A8%EB%B0%80%EB%A7%81_%ED%99%94%EB%A9%B4_%ED%9D%90%EB%A6%84%EB%8F%84-%EB%A1%9C%EA%B7%B8%EC%9D%B8_.drawio_(1).png)
+![패밀링 화면 흐름도-페이지-11](https://github.com/user-attachments/assets/bb78069d-6a1e-4783-a3a7-3b3dd6bcd96e)
 
-- 사용자는
-
-```
-
-```
-
-**가족 생성**
-
-![패밀링 화면 흐름도-가족.drawio (2).png](https://prod-files-secure.s3.us-west-2.amazonaws.com/35fcd473-6b4a-40a8-af94-8368c00155b9/3fbd62a6-d754-46fb-92b6-3676b40bef0a/%ED%8C%A8%EB%B0%80%EB%A7%81_%ED%99%94%EB%A9%B4_%ED%9D%90%EB%A6%84%EB%8F%84-%EA%B0%80%EC%A1%B1.drawio_(2).png)
+#### **로그인**
+![패밀링 화면 흐름도-로그인  drawio (1)](https://github.com/user-attachments/assets/f63bcdda-633a-4070-b1b1-b48f172b9281)
 
 ```
 
 ```
 
-**상태보기**
+#### **가족 생성**
+![패밀링 화면 흐름도-가족 drawio (2)](https://github.com/user-attachments/assets/6f40a743-47b7-4459-9fcc-648e511f498b)
 
-![패밀링 화면 흐름도-상태보기.drawio.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/35fcd473-6b4a-40a8-af94-8368c00155b9/4c42597f-0685-4383-9697-6d5710f59bd3/%ED%8C%A8%EB%B0%80%EB%A7%81_%ED%99%94%EB%A9%B4_%ED%9D%90%EB%A6%84%EB%8F%84-%EC%83%81%ED%83%9C%EB%B3%B4%EA%B8%B0.drawio.png)
 
-```
-
-```
-
-**스냅샷**
-
-![패밀링 화면 흐름도-스냅샷.drawio (1).png](https://prod-files-secure.s3.us-west-2.amazonaws.com/35fcd473-6b4a-40a8-af94-8368c00155b9/e5716796-f793-4ca4-b5bb-91be1632095a/%ED%8C%A8%EB%B0%80%EB%A7%81_%ED%99%94%EB%A9%B4_%ED%9D%90%EB%A6%84%EB%8F%84-%EC%8A%A4%EB%83%85%EC%83%B7.drawio_(1).png)
 
 ```
 
 ```
 
-**애정카드**
+#### **상태보기**
+![패밀링 화면 흐름도-상태보기 drawio](https://github.com/user-attachments/assets/ee3674ad-741e-4225-b0ec-3e433fe0676e)
 
-![패밀링 화면 흐름도-애정카드.drawio (1).png](https://prod-files-secure.s3.us-west-2.amazonaws.com/35fcd473-6b4a-40a8-af94-8368c00155b9/1ed76331-631c-4c62-bfb8-56f9e1b10411/%ED%8C%A8%EB%B0%80%EB%A7%81_%ED%99%94%EB%A9%B4_%ED%9D%90%EB%A6%84%EB%8F%84-%EC%95%A0%EC%A0%95%EC%B9%B4%EB%93%9C.drawio_(1).png)
 
-```
-
-```
-
-**AI 봇**
-
-![패밀링 화면 흐름도-채팅화면.drawio (1).png](https://prod-files-secure.s3.us-west-2.amazonaws.com/35fcd473-6b4a-40a8-af94-8368c00155b9/c57b391e-6c79-48a0-b882-847d9c9dc75c/%ED%8C%A8%EB%B0%80%EB%A7%81_%ED%99%94%EB%A9%B4_%ED%9D%90%EB%A6%84%EB%8F%84-%EC%B1%84%ED%8C%85%ED%99%94%EB%A9%B4.drawio_(1).png)
-
-![패밀링 화면 흐름도-채팅화면.jpg](https://prod-files-secure.s3.us-west-2.amazonaws.com/35fcd473-6b4a-40a8-af94-8368c00155b9/5ecbc6c4-25c2-45d4-a465-c5ce3f52414d/%ED%8C%A8%EB%B0%80%EB%A7%81_%ED%99%94%EB%A9%B4_%ED%9D%90%EB%A6%84%EB%8F%84-%EC%B1%84%ED%8C%85%ED%99%94%EB%A9%B4.jpg)
 
 ```
 
 ```
 
-**마이페이지**
+#### **스냅샷**
+![패밀링 화면 흐름도-스냅샷 drawio (1)](https://github.com/user-attachments/assets/72290cb5-79b1-4085-9e64-41d081a0ac8f)
 
-![패밀링 화면 흐름도-마이페이지.drawio.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/35fcd473-6b4a-40a8-af94-8368c00155b9/fa403dd1-4570-45dd-a71f-be6f82c497e8/%ED%8C%A8%EB%B0%80%EB%A7%81_%ED%99%94%EB%A9%B4_%ED%9D%90%EB%A6%84%EB%8F%84-%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%80.drawio.png)
+
+```
+
+```
+
+####  **애정카드**
+![패밀링 화면 흐름도-애정카드 drawio (1)](https://github.com/user-attachments/assets/ed9f63e7-701b-4062-ad4a-2551a0656473)
+
+
+```
+
+```
+
+#### 채팅 
+
+![패밀링 화면 흐름도-채팅화면](https://github.com/user-attachments/assets/61664396-14ae-4a9a-8146-b0ac81e5c916)
+
+```
+
+```
+
+#### **마이페이지**
+![패밀링 화면 흐름도-마이페이지 drawio](https://github.com/user-attachments/assets/70a49b82-1db7-4fe6-beb1-0062ae98b734)
+
 
 ```
 
@@ -280,9 +281,7 @@ GPT 4o 비용 : 19500원(월)
 
 
 ## 3.3. 기능명세서
-> 개발한 제품에 대한 기능명세서를 작성해 제출하세요.
-> 
-> 노션 링크, 한글 문서, pdf 파일, 구글 스프레드 시트 등...
+
 
 ## 3.4. 디렉토리 구조
 
@@ -550,10 +549,10 @@ familing-frontend
 > 
 
 - 깃허브를 이용해 이슈로 등록하고 일정과 담당자를 정해 업무를 관리함. 그 결과 정해진 시간 내에 개발을 마칠 수 있었음
+![image](https://github.com/user-attachments/assets/c56ed15d-7e11-4073-b546-77ff8620af63)
+![image](https://github.com/user-attachments/assets/45ea65c6-6c5c-443e-88eb-15c70cc20ba4)
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/35fcd473-6b4a-40a8-af94-8368c00155b9/34161641-8e33-4074-9d6e-438a931c40ba/image.png)
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/35fcd473-6b4a-40a8-af94-8368c00155b9/ceb13ec5-8acb-4e0d-9c20-cdb18d969627/image.png)
 
 ### 가족 문답 어플,앤서록 대표님과의 인터뷰
 
