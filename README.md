@@ -193,8 +193,10 @@ GPT 4o 비용 : 19500원(월)
 
 # 2. 상세설계
 ## 2.1. 시스템 구성도
+<img width="675" alt="스크린샷 2024-08-30 오후 4 48 23" src="https://github.com/user-attachments/assets/8eb2af42-b79c-4a25-9a81-57cba9ea22fd">
 
 ## 2.2. ERD
+<img width="675" alt="스크린샷 2024-08-30 오후 4 48 23" src="https://github.com/user-attachments/assets/d5d6ce83-18e1-4165-bc21-a078888bf474">
 
 ## 2.3. 사용 기술
 | 구분 | 사항(성능) |
