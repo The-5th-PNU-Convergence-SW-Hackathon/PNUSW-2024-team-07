@@ -22,8 +22,8 @@ AI를 사용해 내가 입력한 텍스트를 AI가 애정 가득 표현으로 �
 ## 1.1. 개발배경 및 필요성
 ### 1.1.1 떨어져 사는 가족 비율의 증가와 함께 늘어나는 소통 부족 가족
 <br><br>
-<img height = "300" alt="Group 2033" src="https://github.com/user-attachments/assets/56b06163-36c3-4897-8b0f-828f86fba438">
-<img height = "300" alt="Group 2033" src="https://github.com/user-attachments/assets/6d789eac-93cf-45c1-bd9d-381dbe289c52">
+<img height = "250" alt="Group 2033" src="https://github.com/user-attachments/assets/56b06163-36c3-4897-8b0f-828f86fba438">
+<img height = "250" alt="Group 2033" src="https://github.com/user-attachments/assets/6d789eac-93cf-45c1-bd9d-381dbe289c52">
 <br> <br>
 
 1인 가구 비율이 2023년 35.5%로 증가했으며, 따라서 **전체 인구의 3분의 1은 혼자 살고 있다**(통계청). 또한 청년 가구 중 절반이 부모와 떨어져 거주하고 있다(동아일보 2020.08.28). 이런 현상은 계속해서 증가해 떨어져 사는 가족의 비중도 늘어날 것이다. 
@@ -54,11 +54,12 @@ AI를 사용해 내가 입력한 텍스트를 AI가 애정 가득 표현으로 �
 
 ### 1.1.4 소통 부족이 가져오는 사회적 문제
 <br> <br> 
-<img  alt="Group 1480" src="https://github.com/user-attachments/assets/1fe39cf5-4d9d-4ebc-a15a-f98089b23afc"> 
+<img  alt="Group 1480" height = "250" src="https://github.com/user-attachments/assets/1fe39cf5-4d9d-4ebc-a15a-f98089b23afc"> 
 <br> <br> 
 가족 소통 부족 문제는 개인의 외로움과 불편함, 가족 구성원 간의 오해와 유대감 약화에서 청년 고립이나, 중년 우을증으로 이어질 수 있다.  
 
 34만 명의 고립 청년에게 연간 약 7조 5천억 원의 사회적 비용이 발생한다. 이에는 비경제 활동으로 인한 사회적 손실비용과, 의료비용 등이 포함된다.  **고립청년 중 12.4%는 가족 관계**로 인해 고립을 시작한다.  또한 건강한 가족 대화는 중년 우울증 예방에 긍정적인 영향을 미치며 가족과의 관계가 **중년 우울증의 중요한 요인**으로 작용한다. (박봉길 2008, 이보라·홍승현 2024)
+
 
 ### 1.1.5 떨어져 사는 가족이 겪는 소통 부족의 원인
 
