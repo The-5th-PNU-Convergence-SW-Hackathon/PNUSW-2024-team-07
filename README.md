@@ -385,6 +385,7 @@ familing-frontend
 ```
 
 ```jsx
+|backend.familing.src.main.java.com.pinu
 ├── familing/
 │   ├── domain/
 │   │   ├── alarm/
