@@ -48,7 +48,7 @@ public class FamilyService {
         Family savefamily = familyRepository.save(family);
 
         // 가족 등록할 때 가족 채팅방 가동 생성
-        chatService.makeChatRoom(user, validCode);
+        chatService.makeChatRoom(validCode);
 
         FamilyDto familyDto = FamilyDto.fromEntity(savefamily);
 
@@ -67,7 +67,7 @@ public class FamilyService {
         if (family == null) {
             throw new CustomException(FAMILY_NOT_FOUND);
         }
-        return MyFamilyDto.toEntity(family);
+        return MyFamilyDto.toEntity(user, family);
     }
 
     private String validFamilyCode(String code) {

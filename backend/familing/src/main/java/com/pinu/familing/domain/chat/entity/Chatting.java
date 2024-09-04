@@ -24,5 +24,6 @@ public class Chatting {
     private String contentType;
     private String content;
     private LocalDateTime sendDate;
+    private String senderProfileImg;
 
 }

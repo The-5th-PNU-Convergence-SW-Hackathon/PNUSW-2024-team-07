@@ -7,10 +7,7 @@ import com.pinu.familing.global.oauth.dto.PrincipalDetails;
 import com.pinu.familing.global.util.ApiUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,7 +25,7 @@ public class StatusController {
     //유저의 상태 변경
     @PatchMapping("/users")
     public ApiUtils.ApiResult<?> changeUserStatus(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                                  StatusRequest statusRequest) {
+                                                  @RequestBody StatusRequest statusRequest) {
         statusService.changeUserStatus(principalDetails.getUsername(), statusRequest);
         return ApiUtils.success("User's status has been successfully changed.");
     }
@@ -37,7 +34,6 @@ public class StatusController {
     //유저와 가족의 상태 조회
     @GetMapping("/family")
     public ApiUtils.ApiResult<?> changeFamilyStatus(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        statusService.getFamilyStatusList(principalDetails.getUsername());
-        return ApiUtils.success("User's status has been successfully changed.");
+        return ApiUtils.success(statusService.getFamilyStatusList(principalDetails.getUsername()));
     }
 }

@@ -33,7 +33,7 @@ public class FamilyController {
     public ApiUtils.ApiResult<?> createFamily(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody FamilyName familyName) {
         Map<String, Object> responseBody = new HashMap<>();
         //가족 코드 생성 로직
-        FamilyDto familyDto = familyService.registerNewFamily(principalDetails.getUsername(), familyName.name());
+        FamilyDto familyDto = familyService.registerNewFamily(principalDetails.getUsername(), familyName.familyName());
         //유저에 가족을 넣기
         userService.addFamilyToUser(principalDetails.getUsername(), familyDto.code());
         responseBody.put("code", familyDto.code());
