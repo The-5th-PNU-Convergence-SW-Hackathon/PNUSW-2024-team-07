@@ -384,195 +384,194 @@ familing-frontend
     └── util				# 유틸리티 함수 및 모듈
 ```
 
-```jsx
+```
 |backend.familing.src.main.java.com.pinu
-├── familing/
-│   ├── domain/
-│   │   ├── alarm/
-│   │   │   ├── controller/
-│   │   │   │   ├── AlarmController
-│   │   │   ├── dto/
-│   │   │   │   ├── AlarmDto
-│   │   │   │   ├── AlarmResponseDto
-│   │   │   ├── entity/
-│   │   │   │   ├── Alarm
-│   │   │   ├── repository/
-│   │   │   │   ├── AlarmRepository
-│   │   │   ├── service/
-│   │   │   │   ├── AlarmService
-│   │   │   │   ├── AlarmType
-│   │   ├── chat/
-│   │   │   ├── config/
-│   │   │   │   ├── HttpHandshakeInterceptor
-│   │   │   │   ├── ListenerConfiguration
-│   │   │   │   ├── ProducerConfig
-│   │   │   │   ├── StompHandler
-│   │   │   ├── controller/
-│   │   │   │   ├── ChatController
-│   │   │   ├── dto/
-│   │   │   │   ├── ChatResponseDto
-│   │   │   │   ├── ChatRoomInfoDto
-│   │   │   │   ├── ChattingHistoryResponseDto
-│   │   │   ├── entity/
-│   │   │   │   ├── ChatRoom
-│   │   │   │   ├── Chatting
-│   │   │   │   ├── Message
-│   │   │   ├── messaging/
-│   │   │   │   ├── MessageReceiver
-│   │   │   │   ├── MessageSender
-│   │   │   ├── repository/
-│   │   │   │   ├── ChatRoomRepository
-│   │   │   │   ├── MongoChatRepository
-│   │   │   ├── service/
-│   │   │   │   ├── ChatService
-│   │   ├── family/
-│   │   │   ├── controller/
-│   │   │   │   ├── FamilyController
-│   │   │   ├── dto/
-│   │   │   │   ├── FamilyCode
-│   │   │   │   ├── FamilyDto
-│   │   │   │   ├── FamilyName
-│   │   │   │   ├── FamilyUserDto
-│   │   │   │   ├── FamilyUsersDto
-│   │   │   │   ├── MyFamilyDto
-│   │   │   ├── entity/
-│   │   │   │   ├── Family
-│   │   │   ├── handler/
-│   │   │   │   ├── FamilyCodeHandler
-│   │   │   ├── repository/
-│   │   │   │   ├── FamilyRepository
-│   │   │   ├── service/
-│   │   │   │   ├── FamilyService
-│   │   ├── gpt/
-│   │   │   ├── config/
-│   │   │   │   ├── ChatGPTConfig
-│   │   │   ├── controller/
-│   │   │   │   ├── ChatGPTController
-│   │   │   ├── dto/
-│   │   │   │   ├── ChatGptRequest
-│   │   │   │   ├── ChatGPTResponse
-│   │   │   │   ├── GptRequestMessage
-│   │   │   │   ├── Prompt
-│   │   ├── lovecard/
-│   │   │   ├── controller/
-│   │   │   │   ├── LovecardController
-│   │   │   ├── dto/
-│   │   │   │   ├── LovecardLogResponse
-│   │   │   │   ├── LovecardRequest
-│   │   │   │   ├── LovecardResponse
-│   │   │   ├── entity/
-│   │   │   │   ├── Lovecard
-│   │   │   │   ├── LovecardLog
-│   │   │   ├── repository/
-│   │   │   │   ├── LovecardLogRepository
-│   │   │   │   ├── LovecardRepository
-│   │   │   ├── service/
-│   │   │   │   ├── LovecardService
-│   │   ├── payment/
-│   │   │   ├── entity/
-│   │   │   │   ├── Payment
-│   │   ├── snapshot/
-│   │   │   ├── controller/
-│   │   │   │   ├── SnapshotController
-│   │   │   ├── dto/
-│   │   │   │   ├── CustomPage
-│   │   │   │   ├── SnapshotImageRequest
-│   │   │   │   ├── SnapshotResponse
-│   │   │   ├── entity/
-│   │   │   │   ├── Snapshot
-│   │   │   │   ├── SnapshotImage
-│   │   │   │   ├── SnapshotTitle
-│   │   │   ├── repository/
-│   │   │   │   ├── SnapshotImageRepository
-│   │   │   │   ├── SnapshotRepository
-│   │   │   │   ├── SnapshotTitleRepository
-│   │   │   ├── scheduler/
-│   │   │   │   ├── SnapshotScheduler
-│   │   │   ├── service/
-│   │   │   │   ├── SnapshotService
-│   │   │   │   ├── TitleService
-│   │   ├── status/
-│   │   │   ├── controller/
-│   │   │   │   ├── StatusController
-│   │   │   ├── dto/
-│   │   │   │   ├── MyFamilyStatusResponse
-│   │   │   │   ├── StatusRequest
-│   │   │   │   ├── StatusResponse
-│   │   │   ├── entity/
-│   │   │   │   ├── Status
-│   │   │   ├── repository/
-│   │   │   │   ├── StatusRepository
-│   │   │   ├── service/
-│   │   │   │   ├── StatusService
-│   │   ├── subscription/
-│   │   │   ├── controller/
-│   │   │   │   ├── SubscriptionController
-│   │   │   ├── dto/
-│   │   │   │   ├── SubscriptionResponse
-│   │   │   ├── entity/
-│   │   │   │   ├── Subscription
-│   │   │   ├── repository/
-│   │   │   │   ├── SubscriptionRepository
-│   │   │   ├── service/
-│   │   │   │   ├── SubscriptionService
-│   │   ├── user/
-│   │   │   ├── controller/
-│   │   │   │   ├── UserController
-│   │   │   ├── dto/
-│   │   │   │   ├── Nickname
-│   │   │   │   ├── Realname
-│   │   │   │   ├── UserDto
-│   │   │   │   ├── UserResponse
-│   │   │   ├── entity/
-│   │   │   │   ├── User
-│   │   │   ├── repository/
-│   │   │   │   ├── UserRepository
-│   │   │   ├── service/
-│   │   │   │   ├── UserService
-│   │   │   │   ├── Gender
-│   ├── global/
-│   │   ├── config/
-│   │   │   ├── CorsMvcConfig
-│   │   │   ├── MongoConfig
-│   │   │   ├── MongoProperties
-│   │   │   ├── SecurityConfig
-│   │   │   ├── WebSocketConfiguration
-│   │   ├── error/
-│   │   │   ├── CustomException
-│   │   │   ├── ExceptionCode
-│   │   │   ├── GlobalExceptionHandler
-│   │   ├── jwt/
-│   │   │   ├── JWTFilter
-│   │   │   ├── JWTUtil
-│   │   ├── oauth/
-│   │   │   ├── controller/
-│   │   │   │   ├── KakaoController
-│   │   │   ├── dto/
-│   │   │   │   ├── AccessToken
-│   │   │   │   ├── CustomOAuth2User
-│   │   │   │   ├── KakaoProfileRequest
-│   │   │   │   ├── KakaoResponse
-│   │   │   │   ├── OAuth2Response
-│   │   │   │   ├── PrincipalDetails
-│   │   │   ├── properties/
-│   │   │   │   ├── KakaoProperties
-│   │   │   ├── service/
-│   │   │   │   ├── CustomOAuth2UserService
-│   │   │   │   ├── KakaoService
-│   │   │   │   ├── PrincipalService
-│   │   │   │   ├── CustomSuccessHandler
-│   │   ├── s3/
-│   │   │   ├── AwsS3Service
-│   │   │   ├── S3Config
-│   │   │   ├── S3Image
-│   │   │   ├── S3ImageRepository
-│   │   │   ├── S3ImgDto
-│   │   ├── util/
-│   │   │   ├── ApiUtils
-│   │   │   ├── ConstantUtil
-│   │   │   ├── SecurityUtil
-│   ├── FamilingApplication
-
+├── familing/                         # 애플리케이션의 주요 패키지
+│   ├── domain/                       # 도메인 관련 코드가 위치하는 패키지
+│   │   ├── alarm/                    # 알림(Alarm) 기능 관련 코드
+│   │   │   ├── controller/           # 알림 기능을 위한 컨트롤러 클래스
+│   │   │   │   ├── AlarmController   # 알림 기능의 HTTP 요청을 처리하는 컨트롤러
+│   │   │   ├── dto/                  # 알림 기능에서 사용되는 데이터 전송 객체(DTO)
+│   │   │   │   ├── AlarmDto          # 알림 정보 전달을 위한 DTO
+│   │   │   │   ├── AlarmResponseDto  # 알림 응답을 위한 DTO
+│   │   │   ├── entity/               # 알림 기능의 엔티티 클래스
+│   │   │   │   ├── Alarm             # 알림 엔티티, 데이터베이스 테이블과 매핑
+│   │   │   ├── repository/           # 알림 기능의 리포지토리 클래스
+│   │   │   │   ├── AlarmRepository   # 알림 엔티티에 대한 데이터베이스 접근을 처리
+│   │   │   ├── service/              # 알림 기능의 비즈니스 로직을 처리하는 서비스 클래스
+│   │   │   │   ├── AlarmService      # 알림 관련 비즈니스 로직 구현
+│   │   │   │   ├── AlarmType         # 알림 유형을 정의하는 Enum 클래스
+│   │   ├── chat/                     # 채팅(Chat) 기능 관련 코드
+│   │   │   ├── config/               # 채팅 기능의 설정 관련 클래스
+│   │   │   │   ├── HttpHandshakeInterceptor  # WebSocket 핸드셰이크 인터셉터
+│   │   │   │   ├── ListenerConfiguration    # 이벤트 리스너 설정
+│   │   │   │   ├── ProducerConfig           # 메시지 프로듀서 설정
+│   │   │   │   ├── StompHandler             # STOMP 프로토콜 처리 핸들러
+│   │   │   ├── controller/           # 채팅 기능을 위한 컨트롤러 클래스
+│   │   │   │   ├── ChatController    # 채팅 기능의 HTTP 요청을 처리하는 컨트롤러
+│   │   │   ├── dto/                  # 채팅 기능에서 사용되는 데이터 전송 객체(DTO)
+│   │   │   │   ├── ChatResponseDto   # 채팅 응답을 위한 DTO
+│   │   │   │   ├── ChatRoomInfoDto   # 채팅방 정보 전달을 위한 DTO
+│   │   │   │   ├── ChattingHistoryResponseDto  # 채팅 기록 응답을 위한 DTO
+│   │   │   ├── entity/               # 채팅 기능의 엔티티 클래스
+│   │   │   │   ├── ChatRoom          # 채팅방 엔티티
+│   │   │   │   ├── Chatting          # 채팅 메시지 엔티티
+│   │   │   │   ├── Message           # 개별 메시지 엔티티
+│   │   │   ├── messaging/            # 메시징 관련 클래스 (메시지 송수신)
+│   │   │   │   ├── MessageReceiver   # 메시지 수신 처리
+│   │   │   │   ├── MessageSender     # 메시지 송신 처리
+│   │   │   ├── repository/           # 채팅 기능의 리포지토리 클래스
+│   │   │   │   ├── ChatRoomRepository  # 채팅방 엔티티에 대한 데이터베이스 접근 처리
+│   │   │   │   ├── MongoChatRepository # MongoDB 기반 채팅 리포지토리
+│   │   │   ├── service/              # 채팅 기능의 비즈니스 로직을 처리하는 서비스 클래스
+│   │   │   │   ├── ChatService       # 채팅 관련 비즈니스 로직 구현
+│   │   ├── family/                   # 가족(Family) 기능 관련 코드
+│   │   │   ├── controller/           # 가족 기능을 위한 컨트롤러 클래스
+│   │   │   │   ├── FamilyController  # 가족 기능의 HTTP 요청을 처리하는 컨트롤러
+│   │   │   ├── dto/                  # 가족 기능에서 사용되는 데이터 전송 객체(DTO)
+│   │   │   │   ├── FamilyCode        # 가족 코드 관련 DTO
+│   │   │   │   ├── FamilyDto         # 가족 정보 전달을 위한 DTO
+│   │   │   │   ├── FamilyName        # 가족 이름 관련 DTO
+│   │   │   │   ├── FamilyUserDto     # 가족 사용자 정보 DTO
+│   │   │   │   ├── FamilyUsersDto    # 가족 사용자들 정보 DTO
+│   │   │   │   ├── MyFamilyDto       # 사용자의 가족 정보 DTO
+│   │   │   ├── entity/               # 가족 기능의 엔티티 클래스
+│   │   │   │   ├── Family            # 가족 엔티티
+│   │   │   ├── handler/              # 가족 기능의 핸들러 클래스
+│   │   │   │   ├── FamilyCodeHandler # 가족 코드 처리 핸들러
+│   │   │   ├── repository/           # 가족 기능의 리포지토리 클래스
+│   │   │   │   ├── FamilyRepository  # 가족 엔티티에 대한 데이터베이스 접근 처리
+│   │   │   ├── service/              # 가족 기능의 비즈니스 로직을 처리하는 서비스 클래스
+│   │   │   │   ├── FamilyService     # 가족 관련 비즈니스 로직 구현
+│   │   ├── gpt/                      # ChatGPT 관련 기능
+│   │   │   ├── config/               # GPT 기능의 설정 클래스
+│   │   │   │   ├── ChatGPTConfig     # ChatGPT API 설정 클래스
+│   │   │   ├── controller/           # GPT 기능을 위한 컨트롤러 클래스
+│   │   │   │   ├── ChatGPTController # GPT 기능의 HTTP 요청을 처리하는 컨트롤러
+│   │   │   ├── dto/                  # GPT 기능에서 사용되는 데이터 전송 객체(DTO)
+│   │   │   │   ├── ChatGptRequest    # GPT 요청 DTO
+│   │   │   │   ├── ChatGPTResponse   # GPT 응답 DTO
+│   │   │   │   ├── GptRequestMessage # GPT 요청 메시지 DTO
+│   │   │   │   ├── Prompt            # 프롬프트 관련 DTO
+│   │   ├── lovecard/                 # 애정 카드(Lovecard) 기능 관련 코드
+│   │   │   ├── controller/           # 애정 카드 기능을 위한 컨트롤러 클래스
+│   │   │   │   ├── LovecardController # 애정 카드 기능의 HTTP 요청을 처리하는 컨트롤러
+│   │   │   ├── dto/                  # 애정 카드 기능에서 사용되는 데이터 전송 객체(DTO)
+│   │   │   │   ├── LovecardLogResponse  # 애정 카드 로그 응답 DTO
+│   │   │   │   ├── LovecardRequest      # 애정 카드 요청 DTO
+│   │   │   │   ├── LovecardResponse     # 애정 카드 응답 DTO
+│   │   │   ├── entity/               # 애정 카드 기능의 엔티티 클래스
+│   │   │   │   ├── Lovecard          # 애정 카드 엔티티
+│   │   │   │   ├── LovecardLog       # 애정 카드 로그 엔티티
+│   │   │   ├── repository/           # 애정 카드 기능의 리포지토리 클래스
+│   │   │   │   ├── LovecardLogRepository # 애정 카드 로그 리포지토리
+│   │   │   │   ├── LovecardRepository    # 애정 카드 리포지토리
+│   │   │   ├── service/              # 애정 카드 기능의 비즈니스 로직을 처리하는 서비스 클래스
+│   │   │   │   ├── LovecardService   # 애정 카드 관련 비즈니스 로직 구현
+│   │   ├── payment/                  # 결제(Payment) 기능 관련 코드
+│   │   │   ├── entity/               # 결제 기능의 엔티티 클래스
+│   │   │   │   ├── Payment           # 결제 엔티티
+│   ├── snapshot/                     # 스냅샷(Snapshot) 기능 관련 코드
+│   │   ├── controller/               # 스냅샷 기능을 위한 컨트롤러 클래스
+│   │   │   ├── SnapshotController    # 스냅샷 기능의 HTTP 요청을 처리하는 컨트롤러
+│   │   ├── dto/                      # 스냅샷 기능에서 사용되는 데이터 전송 객체(DTO)
+│   │   │   ├── CustomPage            # 페이지네이션을 위한 커스텀 페이지 DTO
+│   │   │   ├── SnapshotImageRequest  # 스냅샷 이미지 요청 DTO
+│   │   │   ├── SnapshotResponse      # 스냅샷 응답 DTO
+│   │   ├── entity/                   # 스냅샷 기능의 엔티티 클래스
+│   │   │   ├── Snapshot              # 스냅샷 엔티티
+│   │   │   ├── SnapshotImage         # 스냅샷 이미지 엔티티
+│   │   │   ├── SnapshotTitle         # 스냅샷 타이틀 엔티티
+│   │   ├── repository/               # 스냅샷 기능의 리포지토리 클래스
+│   │   │   ├── SnapshotImageRepository  # 스냅샷 이미지 리포지토리
+│   │   │   ├── SnapshotRepository       # 스냅샷 리포지토리
+│   │   │   ├── SnapshotTitleRepository  # 스냅샷 타이틀 리포지토리
+│   │   ├── scheduler/                # 스냅샷 스케줄러 관련 클래스
+│   │   │   ├── SnapshotScheduler     # 스냅샷 스케줄러 구현
+│   │   ├── service/                  # 스냅샷 기능의 비즈니스 로직을 처리하는 서비스 클래스
+│   │   │   ├── SnapshotService       # 스냅샷 관련 비즈니스 로직 구현
+│   │   │   ├── TitleService          # 스냅샷 타이틀 관련 비즈니스 로직 구현
+│   ├── status/                       # 상태(Status) 기능 관련 코드
+│   │   ├── controller/               # 상태 기능을 위한 컨트롤러 클래스
+│   │   │   ├── StatusController      # 상태 기능의 HTTP 요청을 처리하는 컨트롤러
+│   │   ├── dto/                      # 상태 기능에서 사용되는 데이터 전송 객체(DTO)
+│   │   │   ├── MyFamilyStatusResponse  # 가족 상태 응답 DTO
+│   │   │   ├── StatusRequest           # 상태 요청 DTO
+│   │   │   ├── StatusResponse          # 상태 응답 DTO
+│   │   ├── entity/                   # 상태 기능의 엔티티 클래스
+│   │   │   ├── Status                # 상태 엔티티
+│   │   ├── repository/               # 상태 기능의 리포지토리 클래스
+│   │   │   ├── StatusRepository      # 상태 엔티티에 대한 데이터베이스 접근 처리
+│   │   ├── service/                  # 상태 기능의 비즈니스 로직을 처리하는 서비스 클래스
+│   │   │   ├── StatusService         # 상태 관련 비즈니스 로직 구현
+│   ├── subscription/                 # 구독(Subscription) 기능 관련 코드
+│   │   ├── controller/               # 구독 기능을 위한 컨트롤러 클래스
+│   │   │   ├── SubscriptionController  # 구독 기능의 HTTP 요청을 처리하는 컨트롤러
+│   │   ├── dto/                      # 구독 기능에서 사용되는 데이터 전송 객체(DTO)
+│   │   │   ├── SubscriptionResponse  # 구독 응답 DTO
+│   │   ├── entity/                   # 구독 기능의 엔티티 클래스
+│   │   │   ├── Subscription          # 구독 엔티티
+│   │   ├── repository/               # 구독 기능의 리포지토리 클래스
+│   │   │   ├── SubscriptionRepository  # 구독 엔티티에 대한 데이터베이스 접근 처리
+│   │   ├── service/                  # 구독 기능의 비즈니스 로직을 처리하는 서비스 클래스
+│   │   │   ├── SubscriptionService   # 구독 관련 비즈니스 로직 구현
+│   ├── user/                         # 사용자(User) 관리 기능 관련 코드
+│   │   ├── controller/               # 사용자 관리 기능을 위한 컨트롤러 클래스
+│   │   │   ├── UserController        # 사용자 관리 기능의 HTTP 요청을 처리하는 컨트롤러
+│   │   ├── dto/                      # 사용자 관리 기능에서 사용되는 데이터 전송 객체(DTO)
+│   │   │   ├── Nickname              # 사용자 닉네임 관련 DTO
+│   │   │   ├── Realname              # 사용자 실명 관련 DTO
+│   │   │   ├── UserDto               # 사용자 정보 전달을 위한 DTO
+│   │   │   ├── UserResponse          # 사용자 응답 DTO
+│   │   ├── entity/                   # 사용자 관리 기능의 엔티티 클래스
+│   │   │   ├── User                  # 사용자 엔티티
+│   │   ├── repository/               # 사용자 관리 기능의 리포지토리 클래스
+│   │   │   ├── UserRepository        # 사용자 엔티티에 대한 데이터베이스 접근 처리
+│   │   ├── service/                  # 사용자 관리 기능의 비즈니스 로직을 처리하는 서비스 클래스
+│   │   │   ├── UserService           # 사용자 관련 비즈니스 로직 구현
+│   │   │   ├── Gender                # 성별 관련 Enum 클래스
+│   ├── global/                       # 전역(Global) 설정 및 유틸리티 관련 코드
+│   │   ├── config/                   # 전역 설정 관련 클래스
+│   │   │   ├── CorsMvcConfig         # CORS 설정 클래스
+│   │   │   ├── MongoConfig           # MongoDB 설정 클래스
+│   │   │   ├── MongoProperties       # MongoDB 프로퍼티 클래스
+│   │   │   ├── SecurityConfig        # 보안 설정 클래스
+│   │   │   ├── WebSocketConfiguration  # WebSocket 설정 클래스
+│   │   ├── error/                    # 전역 오류 처리 관련 클래스
+│   │   │   ├── CustomException       # 커스텀 예외 클래스
+│   │   │   ├── ExceptionCode         # 예외 코드 Enum 클래스
+│   │   │   ├── GlobalExceptionHandler # 전역 예외 핸들러
+│   │   ├── jwt/                      # JWT 인증 관련 코드
+│   │   │   ├── JWTFilter             # JWT 필터 클래스
+│   │   │   ├── JWTUtil               # JWT 유틸리티 클래스
+│   │   ├── oauth/                    # OAuth 인증 관련 코드
+│   │   │   ├── controller/           # OAuth 인증을 위한 컨트롤러 클래스
+│   │   │   │   ├── KakaoController   # 카카오 OAuth 인증 처리 컨트롤러
+│   │   │   ├── dto/                  # OAuth 인증 관련 DTO
+│   │   │   │   ├── AccessToken       # 액세스 토큰 DTO
+│   │   │   │   ├── CustomOAuth2User  # 커스텀 OAuth2 사용자 DTO
+│   │   │   │   ├── KakaoProfileRequest  # 카카오 프로필 요청 DTO
+│   │   │   │   ├── KakaoResponse     # 카카오 응답 DTO
+│   │   │   │   ├── OAuth2Response    # OAuth2 응답 DTO
+│   │   │   │   ├── PrincipalDetails  # 사용자 정보 관련 DTO
+│   │   │   ├── properties/           # OAuth 관련 프로퍼티 클래스
+│   │   │   │   ├── KakaoProperties   # 카카오 API 관련 프로퍼티 클래스
+│   │   │   ├── service/              # OAuth 인증 관련 서비스 클래스
+│   │   │   │   ├── CustomOAuth2UserService  # 커스텀 OAuth2 사용자 서비스 클래스
+│   │   │   │   ├── KakaoService      # 카카오 인증 서비스 클래스
+│   │   │   │   ├── PrincipalService  # 사용자 정보 처리 서비스 클래스
+│   │   │   │   ├── CustomSuccessHandler  # 인증 성공 핸들러 클래스
+│   ├── s3/                           # AWS S3 관련 코드
+│   │   ├── AwsS3Service              # S3 서비스 클래스, S3 버킷과의 상호작용을 처리
+│   │   ├── S3Config                  # S3 설정 클래스
+│   │   ├── S3Image                   # S3 이미지 관련 엔티티 클래스
+│   │   ├── S3ImageRepository         # S3 이미지 리포지토리
+│   │   ├── S3ImgDto                  # S3 이미지 DTO
+│   ├── util/                         # 유틸리티 클래스 모음
+│   │   ├── ApiUtils                  # API 관련 유틸리티 함수 모음
+│   │   ├── ConstantUtil              # 상수 유틸리티 클래스
+│   │   ├── SecurityUtil              # 보안 관련 유틸리티 함수 모음
+│   ├── FamilingApplication           # 애플리케이션의 메인 클래스 (Spring Boot 애플리케이션 시작점)
 ```
 
 ## 3.5. 멘토링 의견 반영사항
