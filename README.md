@@ -638,6 +638,9 @@ familing-frontend
 
 # 4. 설치 및 사용 방법
 [패밀링 다운로드 링크](https://www.notion.so/2f3091422296413b8e84090c15a19456?pvs=21) 
+https://github.com/user-attachments/assets/0ddd7ff3-feaf-4654-b39c-06342cfd36d1
+
+
 
 # 5. 소개 및 시연 영상
 
