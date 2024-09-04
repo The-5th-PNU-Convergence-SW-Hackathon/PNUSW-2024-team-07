@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -13,10 +13,9 @@ import ReceiveCardSecton from '../../../components/features/LoveCard/main/Receiv
 import SendCardSection from '../../../components/features/LoveCard/main/SendCardSection/SendCardSection';
 import {BlurView} from '@react-native-community/blur';
 import SendProfile from '../../../components/features/LoveCard/main/SendCardSection/SendProfile';
-import mom from '../../../assets/images/photocard/photocard2.png';
-import son from '../../../assets/images/photocard/photocard4.png';
-import daughter from '@assets/images/photocard/photocard3.png';
 import {CustomHeader} from '../../../components/features/Layout/CustomHeader';
+import {BASE_URL} from '@/util/base_url';
+import axios from 'axios';
 
 export default function LoveCardMainScreen({navigation}) {
   const [showAvatars, setShowAvatars] = useState(false);
@@ -24,6 +23,22 @@ export default function LoveCardMainScreen({navigation}) {
   const [selectedAvatar, setSelectedAvatar] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedCardId, setSelectedCardId] = useState(null);
+  const [familiy, setFamily] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/api/v1/family`)
+      .then(res => {
+        const familiyData =
+          res.data.result.family_users_dto.family_user_dto_list;
+        setFamily(familiyData);
+        console.log('가족 로드');
+      })
+      .catch(error => {
+        console.log('get familiy list failed ', error);
+      });
+  }, []);
 
   const handleSendClick = () => {
     setShowAvatars(true);
@@ -38,9 +53,25 @@ export default function LoveCardMainScreen({navigation}) {
     setShowAvatars(false);
   };
 
-  const handleAvatarClick = name => {
+  //가족에게 전송
+  const handleAvatarClick = (name, userId) => {
     setSelectedAvatar(name);
-    setConfirmationVisible(true);
+
+    axios
+      .post(`${BASE_URL}/api/vi/lovecards/familys/${userId}`, {
+        card_id: selectedCardId,
+      })
+      .then(response => {
+        console.log(response.data.result);
+        setConfirmationVisible(true);
+      })
+      .catch(error => {
+        console.log('Lovecard send failed', error);
+      });
+
+    setTimeout(() => {
+      setConfirmationVisible(false);
+    }, 1000);
   };
 
   return (
@@ -48,9 +79,10 @@ export default function LoveCardMainScreen({navigation}) {
       <CustomHeader />
       <ScrollView showsHorizontalScrollIndicator={false}>
         <LoveCardBanner />
-        <ReceiveCardSecton navigation={navigation} />
+        <ReceiveCardSecton familiy={familiy} navigation={navigation} />
         <SendCardSection
           setSelectedCard={setSelectedCard}
+          setSelectedCardId={setSelectedCardId}
           setModalVisible={setModalVisible}
         />
         <View style={styles.space} />
@@ -68,7 +100,7 @@ export default function LoveCardMainScreen({navigation}) {
             blurAmount={3}
             overlayColor="rgba(65, 65, 65, 0.7)"
           />
-          <Image source={selectedCard} style={styles.modalImage} />
+          <Image source={{uri: selectedCard}} style={styles.modalImage} />
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity
@@ -82,52 +114,48 @@ export default function LoveCardMainScreen({navigation}) {
               <Text style={styles.cancelButtonText}>취소</Text>
             </TouchableOpacity>
           </View>
-        </View>
 
-        {showAvatars && (
-          <View style={styles.avatarContainer}>
-            <TouchableOpacity
-              style={styles.clearButtonContainer}
-              onPress={handlePopupCancelClick}>
-              <Image
-                style={styles.clearButton}
-                source={require('../../../assets/images/button/clearbtn.png')}
-              />
-            </TouchableOpacity>
-            <ScrollView
-              horizontal
-              style={styles.profileContainer}
-              showsHorizontalScrollIndicator={false}>
-              <View style={styles.avatarBox}>
-                <SendProfile
-                  name="익순여왕님"
-                  image={mom}
-                  handleAvatarClick={handleAvatarClick}
+          {showAvatars && (
+            <View style={styles.avatarContainer}>
+              <TouchableOpacity
+                style={styles.clearButtonContainer}
+                onPress={handlePopupCancelClick}>
+                <Image
+                  style={styles.clearButton}
+                  source={require('../../../assets/images/button/clearbtn.png')}
                 />
-                <SendProfile
-                  name="민지공주"
-                  image={daughter}
-                  handleAvatarClick={handleAvatarClick}
-                />
-                <SendProfile
-                  name="이민형"
-                  image={son}
-                  handleAvatarClick={handleAvatarClick}
-                />
+              </TouchableOpacity>
+              <ScrollView
+                horizontal
+                style={styles.profileContainer}
+                showsHorizontalScrollIndicator={false}>
+                <View style={styles.avatarBox}>
+                  {familiy.map(person => (
+                    <SendProfile
+                      key={person.username}
+                      userId={person.username}
+                      name={person.nickName}
+                      image={person.profileImg}
+                      handleAvatarClick={handleAvatarClick}
+                    />
+                  ))}
+                </View>
+              </ScrollView>
+            </View>
+          )}
+
+          {confirmationVisible && (
+            <View style={styles.confirmationContainer}>
+              <View style={styles.innerWrapper}>
+                <Text style={styles.boldText}>{selectedAvatar}</Text>
+                <Text style={styles.confirmationText}>
+                  님께 전송이 완료되었습니다.
+                </Text>
               </View>
-            </ScrollView>
-          </View>
-        )}
-      </Modal>
-
-      {confirmationVisible && (
-        <View style={styles.confirmationContainer}>
-          <Text style={styles.confirmationText}>
-            <Text style={styles.boldText}>{selectedAvatar}</Text>님께 전송이
-            완료되었습니다.
-          </Text>
+            </View>
+          )}
         </View>
-      )}
+      </Modal>
     </View>
   );
 }
@@ -200,7 +228,8 @@ const styles = StyleSheet.create({
     right: 0,
     height: 172,
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -227,18 +256,26 @@ const styles = StyleSheet.create({
     marginLeft: 24,
   },
   confirmationContainer: {
+    position: 'absolute',
+    bottom: 60,
     width: 312,
     height: 52,
     borderRadius: 10,
     backgroundColor: '#383838',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  innerWrapper: {
+    flexDirection: 'row',
   },
   confirmationText: {
     fontSize: 16,
     fontWeight: '400',
-    textAlign: 'center',
     color: '#FFFFFF',
   },
   boldText: {
+    fontSize: 16,
     fontWeight: '700',
+    color: '#FFFFFF',
   },
 });

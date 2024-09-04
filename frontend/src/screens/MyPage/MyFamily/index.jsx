@@ -4,34 +4,34 @@ import {
   Text,
   StyleSheet,
   Image,
-  // Alert,
+  Alert,
   TouchableOpacity,
 } from 'react-native';
-// import axios from 'axios';
-// import Clipboard from '@react-native-clipboard/clipboard';
+import axios from 'axios';
+import Clipboard from '@react-native-clipboard/clipboard';
 import Arrow from '@assets/images/register/arrowImg.png';
 import CopyImage from '@assets/images/register/copyimage.png';
 import PhotoCard1 from '@assets/images/photocard/photocard1.png';
 import PhotoCard2 from '@assets/images/photocard/photocard2.png';
 import PhotoCard3 from '@assets/images/photocard/photocard3.png';
 import PhotoCard4 from '@assets/images/photocard/photocard4.png';
+import {BASE_URL} from '@/util/base_url';
 
 export default function MyFamilyScreen({navigation}) {
   const [inviteCode, setInviteCode] = useState(null);
 
-  // const fetchInviteCode = async () => {
-  //   try {
-  //     const response = await axios.get('https://api.com'); // 초대 코드 api
-  //     setInviteCode(response.data.inviteCode);
-  //     Clipboard.setString(response.data.inviteCode);
-  //   } catch (error) {
-  //     Alert.alert('초대 코드를 가져오는 데 실패했습니다.');
-  //     console.error(error);
-  //   }
-  // };
-
   useEffect(() => {
-    setInviteCode();
+    const fetchInviteCode = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/api/v1/family`);
+        setInviteCode(response.data.code);
+        Clipboard.setString(response.data.inviteCode);
+      } catch (error) {
+        Alert.alert('초대 코드를 가져오는 데 실패했습니다.');
+        console.error(error);
+      }
+    };
+    fetchInviteCode();
   }, []);
 
   return (
@@ -48,16 +48,16 @@ export default function MyFamilyScreen({navigation}) {
       </View>
 
       <View style={styles.inviteContainer}>
-        <View style={styles.codeBox}>
+        {/* <View style={styles.codeBox}>
           <Text style={styles.code}>YXKRN8QS</Text>
-        </View>
-        {/* <Text style={styles.inviteTitle}>{inviteCode}</Text> */}
-        {/* <TouchableOpacity onPress={setInviteCode} style={styles.copyContainer}> */}
-        <View style={styles.copyContainer}>
-          <Image source={CopyImage} style={styles.copyImage} />
-          <Text style={styles.copyText}>초대 코드 복사하기</Text>
-        </View>
-        {/* </TouchableOpacity> */}
+        </View> */}
+        <Text style={styles.inviteTitle}>{inviteCode}</Text>
+        <TouchableOpacity onPress={setInviteCode} style={styles.copyContainer}>
+          <View style={styles.copyContainer}>
+            <Image source={CopyImage} style={styles.copyImage} />
+            <Text style={styles.copyText}>초대 코드 복사하기</Text>
+          </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.subContainer2}>
@@ -101,6 +101,7 @@ export default function MyFamilyScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
   },
   arrowImage: {
     width: 20,

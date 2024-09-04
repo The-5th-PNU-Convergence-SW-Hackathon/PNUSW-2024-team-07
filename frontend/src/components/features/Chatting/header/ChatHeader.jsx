@@ -21,6 +21,7 @@ export default function ChatHeader({setIsSearch, navigation}) {
 
 const styles = StyleSheet.create({
   container: {
+    zIndex: 9,
     display: 'flex',
     flexDirection: 'row',
     paddingHorizontal: 24,

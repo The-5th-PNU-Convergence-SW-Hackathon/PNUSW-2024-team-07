@@ -35,6 +35,7 @@ export default function SearchChatHeader({setIsSearch}) {
 
 const styles = StyleSheet.create({
   container: {
+    zIndex: 9,
     display: 'flex',
     flexDirection: 'row',
     paddingHorizontal: 24,

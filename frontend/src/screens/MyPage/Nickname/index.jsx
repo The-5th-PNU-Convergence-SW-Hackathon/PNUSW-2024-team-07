@@ -9,14 +9,22 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Arrow from '@assets/images/register/arrowImg.png';
+import axios from 'axios';
+import {BASE_URL} from '@/util/base_url';
 
 export default function NicknameScreen({navigation}) {
-  const [nickname, setNickname] = useState('내가 둘째다');
+  const [nickname, setNickname] = useState(nickname);
 
   const handleChange = async () => {
     try {
       await AsyncStorage.setItem('nickname', nickname);
-      navigation.goBack('MyPage');
+
+      const response = await axios.patch(`${BASE_URL}/api/v1/user/nickname`, {
+        nickname: nickname,
+      });
+
+      console.log('닉네임 변경 성공:', response.data);
+      navigation.goBack();
     } catch (error) {
       console.error('닉네임 저장 실패:', error);
     }
@@ -34,7 +42,7 @@ export default function NicknameScreen({navigation}) {
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder="내가 둘째다"
+            placeholder={nickname}
             placeholderTextColor="#C5C5C5"
             value={nickname}
             onChangeText={setNickname}

@@ -1,20 +1,25 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {LogoIcon} from '../../icon/LogoIcon';
 import {BellIcon} from '../../icon/BellIcon';
+import {useNavigation} from '@react-navigation/native';
 
 export const CustomHeader = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={headerStyles.wrapper}>
       <View style={headerStyles.logo}>
         <LogoIcon />
       </View>
-      <View style={headerStyles.badgeContainer}>
-        <BellIcon />
-        <View style={headerStyles.badge}>
-          <Text style={headerStyles.badgeText}>5</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('NotificationPage')}>
+        <View style={headerStyles.badgeContainer}>
+          <BellIcon />
+          <View style={headerStyles.badge}>
+            <Text style={headerStyles.badgeText}>5</Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

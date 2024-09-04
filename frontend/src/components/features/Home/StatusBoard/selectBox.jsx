@@ -1,21 +1,37 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import selectArrow from '@assets/images/button/selectArrow.png';
+import {getStatuses} from '@/api/getStatuses';
+import axios from 'axios';
+import {BASE_URL} from '@/util/base_url';
 
-const data = [
-  {id: '1', label: '공부 중'},
-  {id: '2', label: '노는 중'},
-  {id: '3', label: '쉬는 중'},
-  {id: '4', label: '일하는 중'},
-];
-
-export default function DropdownSelectBox() {
-  const [selectedItem, setSelectedItem] = useState(data[3]);
+export default function DropdownSelectBox({
+  myStatus,
+  selectedItem,
+  setSelectedItem,
+}) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [statuses, setStatuses] = useState([]);
+
+  useEffect(() => {
+    //등록 가능 상태 조회
+    getStatuses(setStatuses);
+  }, []);
 
   const handleSelectItem = item => {
-    setSelectedItem(item);
-    setDropdownVisible(false);
+    //유저 상태변경
+    axios
+      .patch(`${BASE_URL}/api/v1/statuses/users`, {
+        id: item.id,
+      })
+      .then(response => {
+        console.log(response.data.result);
+        setSelectedItem(item);
+        setDropdownVisible(false);
+      })
+      .catch(error => {
+        console.log('change user status failed', error);
+      });
   };
 
   return (
@@ -24,14 +40,14 @@ export default function DropdownSelectBox() {
         style={styles.selectBox}
         onPress={() => setDropdownVisible(!dropdownVisible)}>
         <View style={styles.textContainer}>
-          <Text style={styles.selectedText}>{selectedItem.label}</Text>
+          <Text style={styles.selectedText}>{myStatus}</Text>
           <Image style={styles.arrowImg} source={selectArrow} />
         </View>
       </TouchableOpacity>
 
       {dropdownVisible && (
         <View style={styles.dropdown}>
-          {data.map(item => (
+          {statuses.map(item => (
             <TouchableOpacity
               key={item.id}
               style={[
@@ -44,7 +60,7 @@ export default function DropdownSelectBox() {
                   styles.itemText,
                   item.id === selectedItem.id && styles.selectedItem,
                 ]}>
-                {item.label}
+                {item.text}
               </Text>
             </TouchableOpacity>
           ))}

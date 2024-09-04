@@ -1,39 +1,49 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Image,
-  Modal,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import photocard1 from '@assets/images/photocard/photocard1.png';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import switchbtn from '@assets/images/button/switchbtn.png';
 import arrowbtn from '@assets/images/button/arrowbtn.png';
-import camera from '@assets/images/register/camera.png';
-import gallery from '@assets/images/register/gallery.png';
-import clearbtn from '@assets/images/button/clearbtn.png';
+import axios from 'axios';
+import {BASE_URL} from '@/util/base_url';
+import ChangeProfile from '@/components/common/ChangeProfile';
+import {useFocusEffect} from '@react-navigation/native';
 
 export default function MyPage({navigation}) {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [nickname, setNickname] = useState('');
+  const [realname, setRealname] = useState('');
+  const [profile, setProfile] = useState('');
 
-  const openModal = () => {
-    setModalVisible(true);
+  useFocusEffect(
+    useCallback(() => {
+      fetchUserData();
+      fetchNickname();
+    }, [profile]),
+  );
+
+  const fetchNickname = async () => {
+    const storedNickname = await AsyncStorage.getItem('nickname');
+    if (storedNickname) {
+      setNickname(storedNickname);
+    }
   };
 
-  const closeModal = () => {
-    setModalVisible(false);
-  };
-
-  const handleCamera = () => {
-    // 카메라 기능 구현
-    closeModal();
-  };
-
-  const handleGallery = () => {
-    // 갤러리 기능 구현
-    closeModal();
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/api/v1/user`);
+      setNickname(response.data.result.nickname);
+      setRealname(response.data.result.realname);
+      setProfile(response.data.result.image_url);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   return (
@@ -41,16 +51,16 @@ export default function MyPage({navigation}) {
       <View style={styles.headerContainer}>
         <Text style={styles.header}>마이페이지</Text>
       </View>
-
-      <View style={styles.profileImageContainer} onPress={openModal}>
-        <Image style={styles.profileImage1} source={photocard1} />
+      <TouchableOpacity
+        style={styles.profileImageContainer}
+        onPress={() => setAlertVisible(true)}>
+        <Image style={styles.profileImage1} source={{uri: profile}} />
         <Image style={styles.profileImage2} source={switchbtn} />
-      </View>
-
+      </TouchableOpacity>
       <View style={styles.profileContainer}>
         <View style={styles.nicknameContainer}>
           <Text style={styles.nicknameTitle1}>닉네임</Text>
-          <Text style={styles.nicknameText1}>내가 둘째다</Text>
+          <Text style={styles.nicknameText1}>{nickname}</Text>
           <TouchableOpacity
             onPress={() => navigation.navigate('NicknameScreen')}>
             <Image style={styles.arrowButton1} source={arrowbtn} />
@@ -59,10 +69,9 @@ export default function MyPage({navigation}) {
         <View style={styles.separator1} />
         <View style={styles.nameContainer}>
           <Text style={styles.nicknameTitle2}>이름</Text>
-          <Text style={styles.nicknameText2}>진서현</Text>
+          <Text style={styles.nicknameText2}>{realname}</Text>
         </View>
       </View>
-
       <View style={styles.profileContainer2}>
         <View style={styles.myfamilyContainer}>
           <Text style={styles.nicknameTitle3}>우리 가족</Text>
@@ -88,7 +97,6 @@ export default function MyPage({navigation}) {
           </TouchableOpacity>
         </View>
       </View>
-
       <View style={styles.profileContainer3}>
         <View style={styles.snapshotContainer}>
           <Text style={styles.nicknameTitle6}>스냅샷 시간 설정</Text>
@@ -99,28 +107,11 @@ export default function MyPage({navigation}) {
         </View>
       </View>
 
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={closeModal}>
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>사진 업로드</Text>
-          <TouchableOpacity style={styles.cameraButton} onPress={handleCamera}>
-            <Image source={camera} style={styles.cameraImage} />
-            <Text style={styles.cameraText}>카메라</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.galleryButton}
-            onPress={handleGallery}>
-            <Image source={gallery} style={styles.galleryImage} />
-            <Text style={styles.galleryText}>앨범</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={closeModal}>
-            <Image source={clearbtn} style={styles.closeButton} />
-          </TouchableOpacity>
-        </View>
-      </Modal>
+      <ChangeProfile
+        visible={alertVisible}
+        onClose={() => setAlertVisible(false)}
+        setImageSelected={setProfile}
+      />
     </ScrollView>
   );
 }
@@ -151,6 +142,7 @@ const styles = StyleSheet.create({
     marginLeft: 134,
   },
   profileImage1: {
+    borderRadius: 50,
     width: 92,
     height: 92,
   },
@@ -174,21 +166,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     color: '#383838',
+    position: 'absolute',
     marginTop: 21,
-    marginLeft: 12,
+    marginLeft: 10,
   },
   nicknameText1: {
     fontSize: 16,
     fontWeight: '400',
     color: '#B3B3B3',
     marginTop: 21,
-    marginLeft: 130,
+    marginLeft: 220,
   },
   arrowButton1: {
     width: 18,
     height: 18,
-    marginTop: 25,
-    marginLeft: 10,
+    position: 'absolute',
+    top: 23,
+    left: 10,
   },
   separator1: {
     width: 310,

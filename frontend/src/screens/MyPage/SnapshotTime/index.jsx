@@ -8,13 +8,14 @@ import {
   Image,
 } from 'react-native';
 import Arrow from '@assets/images/register/arrowImg.png';
+import {setSnapshotTime} from '@/api/setSnapshotTime';
 
 export default function SnapshotTimeScreen({navigation}) {
   const [selectedTime, setSelectedTime] = useState('10:00');
 
   const times = [
-    {label: '8:00', key: '8:00'},
-    {label: '9:00', key: '9:00'},
+    {label: '8:00', key: '08:00'},
+    {label: '9:00', key: '09:00'},
     {label: '10:00', key: '10:00'},
     {label: '11:00', key: '11:00'},
     {label: '12:00', key: '12:00'},
@@ -27,6 +28,11 @@ export default function SnapshotTimeScreen({navigation}) {
 
   const handleTimePress = time => {
     setSelectedTime(time);
+  };
+
+  const handleChangeTime = () => {
+    setSnapshotTime({selectedTime});
+    navigation.navigate('MyPage');
   };
 
   const renderTimeButtons = timesArray => {
@@ -84,10 +90,7 @@ export default function SnapshotTimeScreen({navigation}) {
         </View>
         {renderTimeRows(times.slice(4))}
       </ScrollView>
-
-      <TouchableOpacity
-        style={styles.changeButton}
-        onPress={() => navigation.navigate('MyPage')}>
+      <TouchableOpacity style={styles.changeButton} onPress={handleChangeTime}>
         <Text style={styles.buttonText}>변경하기</Text>
       </TouchableOpacity>
     </View>

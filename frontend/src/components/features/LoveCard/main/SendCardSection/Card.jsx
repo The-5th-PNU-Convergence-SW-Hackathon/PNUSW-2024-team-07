@@ -1,16 +1,22 @@
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 
-export default function Card({loveCard, setSelectedCard, setModalVisible}) {
+export default function Card({
+  loveCard,
+  setSelectedCard,
+  setSelectedCardId,
+  setModalVisible,
+}) {
   const handleCardClick = card => {
-    setSelectedCard(card);
+    setSelectedCard(card.image_url);
+    setSelectedCardId(card.card_id);
     setModalVisible(true);
   };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => handleCardClick(loveCard)}>
-        <Image source={loveCard} style={styles.image} />
+        <Image source={{uri: loveCard.image_url}} style={styles.image} />
       </TouchableOpacity>
     </View>
   );

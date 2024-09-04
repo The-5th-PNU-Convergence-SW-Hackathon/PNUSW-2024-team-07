@@ -1,11 +1,11 @@
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 
-export default function MonthCard({image, handleCardClick}) {
+export default function MonthCard({card, handleCardClick}) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => handleCardClick(image)}>
-        <Image source={image} style={styles.image2} />
+      <TouchableOpacity onPress={() => handleCardClick(card)}>
+        <Image source={{uri: card.image_url}} style={styles.image2} />
       </TouchableOpacity>
     </View>
   );

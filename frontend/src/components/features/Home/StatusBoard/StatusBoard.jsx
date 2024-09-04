@@ -1,13 +1,25 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import StatusProfile from './StatusProfile';
-import {Dad_profile} from '../../../icon/profile/Dad_profile';
-import {Daughter_profile} from '@/components/icon/profile/Daughter_profile';
-import {Mom_profile} from '@/components/icon/profile/Mom_profile';
-import {Son_profile} from '@/components/icon/profile/Son_profile';
+import {useFocusEffect} from '@react-navigation/native';
+import {BASE_URL} from '@/util/base_url';
+import axios from 'axios';
 
 export default function StatusBorad() {
-  const [myName, setMyName] = useState('행복한 부자아빠');
+  const [myStatus, setMyStatus] = useState([]);
+  const [familyStatus, setFamilyStatus] = useState([]);
+  const [selectedItem, setSelectedItem] = useState([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log('status focus');
+
+      axios.get(`${BASE_URL}/api/v1/statuses/family`).then(response => {
+        setMyStatus(response.data.result.me);
+        setFamilyStatus(response.data.result.family);
+      });
+    }, [selectedItem]),
+  );
 
   return (
     <View style={styles.wrapper}>
@@ -15,21 +27,21 @@ export default function StatusBorad() {
         <Text style={styles.title}>상태보기</Text>
         <Text style={styles.subTitle}>현재 가족들의 상태를 볼 수 있어요.</Text>
         <StatusProfile
-          Profile={Dad_profile}
-          name="행복한 부자아빠"
-          myName={myName}
+          key={myStatus.username}
+          person={myStatus}
+          myName={myStatus.nickname}
+          selectedItem={selectedItem}
+          setSelectedItem={setSelectedItem}
         />
-        <StatusProfile
-          Profile={Mom_profile}
-          name="익순여왕님"
-          myName={myName}
-        />
-        <StatusProfile
-          Profile={Daughter_profile}
-          name="민지 공주"
-          myName={myName}
-        />
-        <StatusProfile Profile={Son_profile} name="이민형" myName={myName} />
+        {familyStatus.map(person => (
+          <StatusProfile
+            key={person.username}
+            person={person}
+            myName={myStatus.nickname}
+            selectedItem={selectedItem}
+            setSelectedItem={setSelectedItem}
+          />
+        ))}
       </View>
     </View>
   );

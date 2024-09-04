@@ -1,50 +1,38 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
-import mom_profile from '@assets/images/photocard/photocard2.png';
-import daughter_profile from '@assets/images/photocard/photocard3.png';
-import son_profile from '@assets/images/photocard/photocard4.png';
-import dad_profile from '@assets/images/photocard/photocard1.png';
 
-export const Message = ({message, key, showProfile}) => {
-  const isMyMessage = message.sender === 'me';
-
-  const getProfileImage = () => {
-    switch (message.sender) {
-      case 'mom':
-        return mom_profile;
-      case 'daughter':
-        return daughter_profile;
-      case 'son':
-        return son_profile;
-      case 'dad':
-        return dad_profile;
-    }
-  };
-
-  if (message.sender === 'date') {
+export const Message = ({message, showProfile}) => {
+  if (message.senderId === 'date') {
     return (
       <View style={styles.dateContainer}>
-        <Text style={styles.dateText}>{message.text}</Text>
+        <Text style={styles.dateText}>{message.sendDate}</Text>
       </View>
     );
-  } else if (isMyMessage) {
+  } else if (message.isMine) {
     return (
-      <View key={key} style={[styles.bubbleContainer, styles.myBubble]}>
-        <Text style={[styles.messageText, styles.myText]}>{message.text}</Text>
+      <View key={message.id} style={[styles.bubbleContainer, styles.myBubble]}>
+        <Text style={[styles.messageText, styles.myText]}>
+          {message.content}
+        </Text>
       </View>
     );
-  } else if (!isMyMessage) {
+  } else if (!message.isMine) {
     return (
-      <View style={styles.otherContainer}>
+      <View key={message.id} style={styles.otherContainer}>
         {showProfile ? (
-          <Image source={getProfileImage()} style={styles.profileImg} />
+          <Image
+            source={{uri: message.senderProfileImg}}
+            style={styles.profileImg}
+          />
         ) : (
           <View style={styles.profileImg} />
         )}
 
-        <View key={key} style={[styles.bubbleContainer, styles.otherBubble]}>
+        <View
+          key={message.id}
+          style={[styles.bubbleContainer, styles.otherBubble]}>
           <Text style={[styles.messageText, styles.otherText]}>
-            {message.text}
+            {message.content}
           </Text>
         </View>
       </View>

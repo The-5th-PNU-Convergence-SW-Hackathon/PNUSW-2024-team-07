@@ -1,10 +1,10 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import React, {useEffect} from 'react';
+import React from 'react';
 import Home from '../screens/Home/index';
 import {CustomTabBar} from '../components/features/Layout/CustomTabBar';
-import Chatting from '@/screens/Chatting/Chatting';
 import {LoveCardNavigator} from './LoveCardStack';
 import {MyPageNavigator} from './MyPageStack';
+import NotificationPage from '../screens/Notification/index';
 import ChattingDrawer from './ChattingDrawer';
 
 export const BottomTabScreen = () => {
@@ -33,6 +33,11 @@ export const BottomTabScreen = () => {
         name="MyPageNavigator"
         component={MyPageNavigator}
         options={{tabBarLabel: '마이페이지', headerShown: false}}
+      />
+      <Tab.Screen
+        name="NotificationPage"
+        component={NotificationPage}
+        options={{headerShown: false}}
       />
     </Tab.Navigator>
   );

@@ -10,29 +10,59 @@ import Cookies from '@react-native-cookies/cookies';
 export default function Start({navigation}) {
   //kakao login
   const handleLogin = async () => {
-    KakaoLogin.login()
-      .then(result => {
-        console.log('access token:', JSON.stringify(result.accessToken));
+    //쿠키 삭제
+    clearAllCookies();
 
-        axios
-          .post(`${BASE_URL}/api/v1/login/oauth/kakao/callback`, {
+    //카카오 로그인
+    try {
+      const result = await KakaoLogin.login();
+      console.log('access token:', JSON.stringify(result.accessToken));
+
+      //액세스 토큰 전달
+      try {
+        const response = await axios.post(
+          `${BASE_URL}/api/v1/login/oauth/kakao/callback`,
+          {
             access_token: result.accessToken,
-          })
-          .then(response => {
-            console.log(response.data.result);
-            navigation.navigate('RegisterScreen');
-          })
-          .catch(error => {
-            console.log('access faild', error);
-          });
-      })
-      .catch(error => {
-        if (error.code === 'E_CANCELLED_OPERATION') {
-          console.log('Login Cancel', error.message);
-        } else {
-          console.log(`Login Fail(code:${error.code})`, error.message);
+          },
+        );
+
+        //로그인 후 화면 이동
+        const hasFamily = await handleFamily();
+        if (hasFamily === false) {
+          navigation.navigate('RegisterScreen');
+        } else if (hasFamily === true) {
+          navigation.navigate('Bottom');
         }
-      });
+      } catch (error) {
+        console.log('access failed', error);
+      }
+    } catch (error) {
+      if (error.code === 'E_CANCELLED_OPERATION') {
+        console.log('Login Cancel', error.message);
+      } else {
+        console.log(`Login Fail(code:${error.code})`, error.message);
+      }
+    }
+  };
+
+  const handleFamily = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/api/v1/family`);
+      return response.data.success;
+    } catch (error) {
+      console.log('get familiy list failed ', error);
+    }
+  };
+
+  const clearAllCookies = async () => {
+    try {
+      await Cookies.clearAll();
+
+      console.log('모든 쿠키가 삭제되었습니다.');
+    } catch (error) {
+      console.error('모든 쿠키 삭제 중 오류가 발생했습니다:', error);
+    }
   };
 
   return (

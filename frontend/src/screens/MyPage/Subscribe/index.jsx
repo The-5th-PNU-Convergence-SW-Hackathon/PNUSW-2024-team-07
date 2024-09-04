@@ -13,9 +13,10 @@ import premium from '@assets/images/mypage/premium.png';
 
 export default function SubscribeScreen({navigation}) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [warnVisible, setWarnVisible] = useState(false);
 
   const handleConfirm = () => {
-    setModalVisible(true);
+    setWarnVisible(true);
   };
 
   return (
@@ -152,6 +153,41 @@ export default function SubscribeScreen({navigation}) {
               <TouchableOpacity
                 style={styles.confirmButton}
                 onPress={handleConfirm}>
+                <Text style={styles.buttonText2}>확인</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={warnVisible}
+        onRequestClose={() => setModalVisible(false)}>
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalTitleContainer}>
+              <Text style={styles.modalTitle1}>중복 안내</Text>
+            </View>
+            <Text style={styles.modalMessage}>
+              이전에 무료로{'\n'}체험한 기록이 있습니다.
+            </Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.cancelButton}
+                onPress={() => {
+                  setWarnVisible(false);
+                  setModalVisible(false);
+                }}>
+                <Text style={styles.buttonText1}>취소</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.confirmButton1}
+                onPress={() => {
+                  setWarnVisible(false);
+                  setModalVisible(false);
+                }}>
                 <Text style={styles.buttonText2}>확인</Text>
               </TouchableOpacity>
             </View>
@@ -412,5 +448,19 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#FFFFFF',
     textAlign: 'center',
+  },
+  modalTitle1: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#FF3434',
+    textAlign: 'center',
+  },
+  confirmButton1: {
+    width: 136,
+    height: 40,
+    borderRadius: 38,
+    backgroundColor: '#FF3434',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

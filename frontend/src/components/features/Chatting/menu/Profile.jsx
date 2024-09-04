@@ -4,7 +4,7 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 export default function Profile({profile, name}) {
   return (
     <View style={styles.container}>
-      <Image source={profile} style={styles.profile} />
+      <Image source={{uri: profile}} style={styles.profile} />
       <Text style={styles.name}>{name}</Text>
     </View>
   );

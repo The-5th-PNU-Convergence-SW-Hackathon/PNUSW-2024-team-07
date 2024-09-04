@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -7,9 +7,6 @@ import {
   Modal,
   Text,
   ScrollView,
-  // PermissionsAndroid,
-  // Platform,
-  // NativeModules,
 } from 'react-native';
 import SendInfo from '../../../components/features/LoveCard/detail/sendInfo';
 import TodayReceiveCard from '../../../components/features/LoveCard/detail/todayReceiveCard';
@@ -18,14 +15,43 @@ import clearbtn2 from '@assets/images/button/clearbtn2.png';
 import {BlurView} from '@react-native-community/blur';
 import SaveBtn from '../../../components/icon/LoveCard/SaveBtn';
 import Header from '../../../components/features/Layout/Header';
-// import * as RNFS from 'react-native-fs';
+import {useFocusEffect} from '@react-navigation/native';
+import axios from 'axios';
+import {BASE_URL} from '@/util/base_url';
+import {getTodayCards} from '@/api/getTodayCards';
+import {getMonthCards} from '@/api/getMonthCards';
+
+import * as RNFS from 'react-native-fs';
+import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 
 export default function LoveCardDetailScreen({route, navigation}) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
   const [confirmationVisible, setConfirmationVisible] = useState(false);
+  const [selectedCard, setSelectedCard] = useState('');
+  const [todayCards, setTodayCards] = useState([]);
+  const [monthCards, setMonthCards] = useState([]);
 
-  const {name, image} = route.params;
+  const {name, image, userId} = route.params;
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log('detail focus');
+
+      axios
+        .get(`${BASE_URL}/api/vi/lovecards/familys/${userId}`)
+        .then(response => {
+          const receiveCardsData = response.data.result.content;
+
+          const todayCardsData = getTodayCards(receiveCardsData);
+          const monthCardsData = getMonthCards(receiveCardsData);
+          setTodayCards(todayCardsData);
+          setMonthCards(monthCardsData);
+        })
+        .catch(error => {
+          console.log('fetch receive cards failed', error);
+        });
+    }, []),
+  );
 
   const handleCardClick = card => {
     setSelectedCard(card);
@@ -37,54 +63,43 @@ export default function LoveCardDetailScreen({route, navigation}) {
   };
 
   const handleSaveClick = () => {
-    setConfirmationVisible(true);
+    handleSaveImage();
   };
 
-  // const handleSaveImage = async selectedCard => {
-  //   console.log('image url', selectedCard.toString());
-  //   try {
-  //     // 이미지를 로컬 파일로 다운로드합니다.
+  const handleSaveImage = async () => {
+    try {
+      const fileName = selectedCard.image_url.split('/').pop();
+      const localFilePath = `file:///data/user/0/com.familing/cache/${new Date().getTime()}_${fileName}`;
 
-  //     const localFile = `${RNFS.DocumentDirectoryPath}/${selectedCard.toString()}.png`;
-  //     const options = {
-  //       fromUrl: selectedCard,
-  //       toFile: localFile,
-  //     };
-  //     await RNFS.downloadFile(options).promise;
+      await RNFS.downloadFile({
+        fromUrl: selectedCard.image_url,
+        toFile: localFilePath,
+      }).promise;
 
-  //     // 갤러리에 저장하기 전에 권한 요청
-  //     const {status} = await MediaLibrary.requestPermissionsAsync();
-  //     if (status !== 'granted') {
-  //       Alert.alert(
-  //         'Permissions Not Granted',
-  //         'Gallery access is needed to save the image.',
-  //       );
-  //       return;
-  //     }
+      await CameraRoll.saveAsset(localFilePath, {type: 'photo'});
 
-  //     // MediaLibrary를 사용하여 이미지 저장
-  //     const asset = await MediaLibrary.createAssetAsync(localFile);
-  //     const album = await MediaLibrary.getAlbumAsync('Download');
-  //     if (album == null) {
-  //       await MediaLibrary.createAlbumAsync('Download', asset, false);
-  //     } else {
-  //       await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
-  //     }
-
-  //     Alert.alert('Image Saved to Gallery');
-  //   } catch (error) {
-  //     console.error(error);
-  //     Alert.alert('Failed to save image');
-  //   }
-  // };
+      setConfirmationVisible(true);
+      setTimeout(() => {
+        setConfirmationVisible(false);
+      }, 1000);
+    } catch (error) {
+      console.error('Failed to save image:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <Header title="내가 받은 애정 카드" />
+      <Header title="내가 받은 애정 카드" navigation={navigation} />
       <ScrollView showsHorizontalScrollIndicator={false}>
         <SendInfo image={image} name={name} />
-        <TodayReceiveCard handleCardClick={handleCardClick} />
-        <MonthReceiveCard handleCardClick={handleCardClick} />
+        <TodayReceiveCard
+          todayCards={todayCards}
+          handleCardClick={handleCardClick}
+        />
+        <MonthReceiveCard
+          monthCards={monthCards}
+          handleCardClick={handleCardClick}
+        />
         <View style={styles.space} />
       </ScrollView>
       <Modal
@@ -108,7 +123,10 @@ export default function LoveCardDetailScreen({route, navigation}) {
               <SaveBtn />
             </TouchableOpacity>
             <View style={styles.modalImage}>
-              <Image style={styles.modalImage} source={selectedCard} />
+              <Image
+                style={styles.modalImage}
+                source={{uri: selectedCard.image_url}}
+              />
             </View>
           </View>
         </View>
@@ -147,6 +165,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 1,
   },
   button: {
     position: 'absolute',
@@ -174,6 +193,12 @@ const styles = StyleSheet.create({
     height: 52,
     borderRadius: 10,
     backgroundColor: '#383838',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 25,
+    zIndex: 2,
+    position: 'absolute',
+    top: '50%',
   },
   confirmationText: {
     fontSize: 16,

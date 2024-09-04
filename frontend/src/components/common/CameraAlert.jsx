@@ -17,7 +17,7 @@ import axios from 'axios';
 import {BASE_URL} from '@/util/base_url';
 import getToday from './getToday';
 
-export const CameraAlert = ({visible, onClose, handleImageSelected}) => {
+export const CameraAlert = ({visible, onClose, setUploadImage}) => {
   const handleCamera = async () => {
     await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
     await PermissionsAndroid.request(
@@ -39,7 +39,6 @@ export const CameraAlert = ({visible, onClose, handleImageSelected}) => {
     const type = result.assets[0].type;
 
     postImage(localUri, fileName, type);
-    handleImageSelected(localUri);
     onClose();
   };
 
@@ -58,7 +57,6 @@ export const CameraAlert = ({visible, onClose, handleImageSelected}) => {
     const type = result.assets[0].type;
 
     postImage(localUri, fileName, type);
-    handleImageSelected(localUri);
     onClose();
   };
 
@@ -77,15 +75,12 @@ export const CameraAlert = ({visible, onClose, handleImageSelected}) => {
     ImgFormData.append('snapshot_img', imgFile);
 
     axios
-      .post(
-        `${BASE_URL}/api/v1/snapshots/${today}/users`,
-        ImgFormData,
-        {
-          headers: {'Content-Type': 'multipart/form-data'},
-        },
-      )
+      .post(`${BASE_URL}/api/v1/snapshots/${today}/users`, ImgFormData, {
+        headers: {'Content-Type': 'multipart/form-data'},
+      })
       .then(response => {
         console.log(response.data);
+        setUploadImage(today);
       })
       .catch(error => {
         console.error('snapShot image post failed,', error);

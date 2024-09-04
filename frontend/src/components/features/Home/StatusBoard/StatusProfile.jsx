@@ -1,27 +1,30 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import DropdownSelectBox from './selectBox';
 import StatusBtn from './StatusBtn';
 
-export default function StatusProfile({Profile, name, myName}) {
-  const familiyStatus = {
-    익순여왕님: '쉬는 중',
-    '민지 공주': '노는 중',
-    이민형: '공부 중',
-  };
-
+export default function StatusProfile({
+  person,
+  myName,
+  selectedItem,
+  setSelectedItem,
+}) {
   return (
     <View style={styles.divider}>
       <View style={styles.container}>
         <View style={styles.leftContainer}>
-          <Profile />
-          <Text style={styles.font}>{name}</Text>
+          <Image source={{uri: person.image_url}} style={styles.profile} />
+          <Text style={styles.font}>{person.nickname}</Text>
         </View>
         <View style={styles.rightContainer}>
-          {name === myName ? (
-            <DropdownSelectBox />
+          {person.nickname === myName ? (
+            <DropdownSelectBox
+              myStatus={person.status}
+              selectedItem={selectedItem}
+              setSelectedItem={setSelectedItem}
+            />
           ) : (
-            <StatusBtn nowStatus={familiyStatus[name]} />
+            <StatusBtn nowStatus={person.status} />
           )}
         </View>
       </View>
@@ -58,5 +61,10 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     justifyContent: 'center',
+  },
+  profile: {
+    borderRadius: 50,
+    width: 38,
+    height: 38,
   },
 });

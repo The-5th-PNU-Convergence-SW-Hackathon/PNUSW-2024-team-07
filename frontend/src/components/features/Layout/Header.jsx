@@ -1,13 +1,17 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import backIcon from '@assets/images/header/backIcon.png';
 
-export default function Header({title}) {
+export default function Header({title, navigation}) {
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.iconContainer}>
+      <TouchableOpacity onPress={handleGoBack} style={styles.iconContainer}>
         <Image source={backIcon} style={styles.backIcon} />
-      </View>
+      </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
     </View>
   );

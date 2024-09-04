@@ -6,52 +6,65 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  Alert,
 } from 'react-native';
 import {ProgressIndicator} from '../ProgressIndicator';
-import Avatar from '@assets/images/photocard/photocard1.png';
+import Avatar from '@assets/images/photocard/defaultProfile.png';
 import SwitchButton from '@assets/images/button/switchbtn.png';
-import {CameraAlert} from '../../../components/common/CameraAlert';
+import {ChangeProfile} from '@/components/common/ChangeProfile';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import {BASE_URL} from '@/util/base_url';
 
 export const RegisterStep4 = ({navigation}) => {
   const [code, setCode] = useState('');
-  const [isCameraAlertVisible, setCameraAlertVisible] = useState(false);
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [imageSelected, setImageSelected] = useState('');
 
-  const handleClick = async () => {
-    setCameraAlertVisible(true);
-    setCameraAlertVisible(true);
+  const handleClick = () => {
+    setAlertVisible(true);
   };
 
   const handleConfirm = async () => {
-    navigation.navigate('Bottom'); 
-  };
+    if (code.trim() === '') {
+      Alert.alert('필수 입력입니다.');
+    } else if (!imageSelected) {
+      Alert.alert('이미지를 등록해 주세요.');
+    } else {
+      try {
+        await AsyncStorage.setItem('nickname', code);
 
-  const openModal = () => {
-    setModalVisible(true);
-  };
+        const response = await axios.patch(`${BASE_URL}/api/v1/user/nickname`, {
+          nickname: code,
+        });
 
-  const closeModal = () => {
-    setModalVisible(false);
-  };
-
-  const handleCamera = () => {
-    // 카메라 기능 구현
-    closeModal();
-  };
-
-  const handleGallery = () => {
-    // 갤러리 기능 구현
-    closeModal();
-
+        console.log('닉네임 변경 성공:', response.data);
+        navigation.navigate('Bottom');
+      } catch (error) {
+        console.error('닉네임 저장 실패:', error);
+      }
+    }
   };
 
   return (
     <View style={styles.container}>
       <ProgressIndicator currentStep={3} />
       <View style={styles.imageContainer}>
-        <TouchableOpacity onPress={handleClick} style={styles.buttonContainer}>
-          <Image source={Avatar} style={styles.image} />
-          <Image style={styles.image2} source={SwitchButton} />
-        </TouchableOpacity>
+        {imageSelected ? (
+          <TouchableOpacity
+            onPress={handleClick}
+            style={styles.buttonContainer}>
+            <Image source={{uri: imageSelected}} style={styles.image} />
+            <Image style={styles.image2} source={SwitchButton} />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={handleClick}
+            style={styles.buttonContainer}>
+            <Image source={Avatar} style={styles.image} />
+            <Image style={styles.image2} source={SwitchButton} />
+          </TouchableOpacity>
+        )}
       </View>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Familing에서 사용할 이름</Text>
@@ -70,9 +83,10 @@ export const RegisterStep4 = ({navigation}) => {
         <Text style={styles.buttonText}>확인</Text>
       </TouchableOpacity>
 
-      <CameraAlert
-        visible={isCameraAlertVisible}
-        onClose={() => setCameraAlertVisible(false)}
+      <ChangeProfile
+        visible={alertVisible}
+        onClose={() => setAlertVisible(false)}
+        setImageSelected={setImageSelected}
       />
     </View>
   );
@@ -89,6 +103,7 @@ const styles = StyleSheet.create({
     marginLeft: 124,
   },
   image: {
+    borderRadius: 60,
     width: 112,
     height: 112,
   },
@@ -116,8 +131,8 @@ const styles = StyleSheet.create({
     width: 312,
     height: 32,
     fontSize: 16,
-    fontWeight: '400',
-    color: '#C5C5C5',
+    fontWeight: '700',
+    color: '#383838',
     paddingHorizontal: 5,
     paddingVertical: 1,
     marginLeft: 24,

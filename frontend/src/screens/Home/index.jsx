@@ -1,5 +1,4 @@
 import {Banner} from '@/components/features/Home/Banner/Banner';
-import {FamilingBanner} from '../../components/features/Home/Banner/FamilingBanner';
 import {SnapShot} from '../../components/features/Home/SnapShot/SnapShot';
 import StatusBorad from '../../components/features/Home/StatusBoard/StatusBoard';
 import {CustomHeader} from '../../components/features/Layout/CustomHeader';

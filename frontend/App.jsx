@@ -3,12 +3,13 @@ import React, {useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {BottomTabScreen} from './src/navigation/BottomTabScreen.jsx';
 import {StatusBar} from 'react-native';
-import {StartStacks} from '@/navigation/StartStack.jsx';
+import {StartStacks} from './src/navigation/StartStack.jsx';
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function App() {
   const Stack = createNativeStackNavigator();
+
   useEffect(() => {
     getFcmToken();
 
@@ -16,7 +17,7 @@ function App() {
     return () => {
       foregroundListener();
     };
-  }, []);
+  }, [foregroundListener]);
 
   //FCM 토큰 발급
   const getFcmToken = async () => {
@@ -33,14 +34,14 @@ function App() {
   });
 
   //background 메시지 리스너
-  const backgroundListener = messaging().setBackgroundMessageHandler(
-    async remoteMessage => {
-      console.log(
-        '[+] Message in the background',
-        JSON.stringify(remoteMessage),
-      );
-    },
-  );
+  // const backgroundListener = messaging().setBackgroundMessageHandler(
+  //   async remoteMessage => {
+  //     console.log(
+  //       '[+] Message in the background',
+  //       JSON.stringify(remoteMessage),
+  //     );
+  //   },
+  // );
 
   return (
     <NavigationContainer>

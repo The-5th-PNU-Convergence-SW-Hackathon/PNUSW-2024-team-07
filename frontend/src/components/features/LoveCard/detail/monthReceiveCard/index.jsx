@@ -1,12 +1,8 @@
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import monthCard1 from '../../../../../assets/images/lovecard/lovecard3.png';
-import monthCard2 from '../../../../../assets/images/lovecard/lovecard6.png';
-import monthCard3 from '../../../../../assets/images/lovecard/lovecard7.png';
-import monthCard4 from '../../../../../assets/images/lovecard/lovecard11.png';
 import MonthCard from './MonthCard';
 
-export default function MonthReceiveCard({handleCardClick}) {
+export default function MonthReceiveCard({monthCards, handleCardClick}) {
   return (
     <View style={styles.container}>
       <View>
@@ -18,10 +14,17 @@ export default function MonthReceiveCard({handleCardClick}) {
 
       <View style={styles.scrollCotainer}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <MonthCard image={monthCard2} handleCardClick={handleCardClick} />
-          <MonthCard image={monthCard1} handleCardClick={handleCardClick} />
-          <MonthCard image={monthCard3} handleCardClick={handleCardClick} />
-          <MonthCard image={monthCard4} handleCardClick={handleCardClick} />
+          {monthCards == undefined ? (
+            <Text style={styles.text}>최근 30일간 받은 카드가 없어요!</Text>
+          ) : (
+            monthCards.map(card => (
+              <MonthCard
+                key={card.id}
+                card={card.lovecardResponse}
+                handleCardClick={handleCardClick}
+              />
+            ))
+          )}
         </ScrollView>
       </View>
     </View>
@@ -46,6 +49,12 @@ const styles = StyleSheet.create({
     color: '#383838',
   },
   scrollCotainer: {
+    alignItems: 'center',
     marginTop: 16,
+    height: 156,
+  },
+  text: {
+    marginTop: 64,
+    color: '#C5C5C5',
   },
 });

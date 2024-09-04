@@ -1,11 +1,8 @@
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import Profile from './Profile';
-import mom_profile from '../../../../../assets/images/photocard/photocard2.png';
-import daughter_profile from '../../../../../assets/images/photocard/photocard3.png';
-import son_profile from '../../../../../assets/images/photocard/photocard4.png';
 
-export default function ReceiveCardSecton({navigation}) {
+export default function ReceiveCardSecton({familiy, navigation}) {
   return (
     <View style={styles.container}>
       <View>
@@ -16,21 +13,15 @@ export default function ReceiveCardSecton({navigation}) {
       </View>
       <View style={styles.cardContainer}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <Profile
-            name="익순여왕님"
-            profileImg={mom_profile}
-            navigation={navigation}
-          />
-          <Profile
-            name="민지공주"
-            profileImg={daughter_profile}
-            navigation={navigation}
-          />
-          <Profile
-            name="이민형"
-            profileImg={son_profile}
-            navigation={navigation}
-          />
+          {familiy.map(person => (
+            <Profile
+              key={person.username}
+              name={person.nickName}
+              profileImg={person.profileImg}
+              userId={person.username}
+              navigation={navigation}
+            />
+          ))}
         </ScrollView>
       </View>
     </View>

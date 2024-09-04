@@ -1,16 +1,8 @@
 import React from 'react';
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import shineCard from '@assets/images/lovecard/lovecard5.png';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import TodayCards from './TodayCards';
 
-export default function TodayReceiveCard({handleCardClick}) {
+export default function TodayReceiveCard({todayCards, handleCardClick}) {
   return (
     <View style={styles.container}>
       <View>
@@ -20,7 +12,17 @@ export default function TodayReceiveCard({handleCardClick}) {
 
       <View style={styles.scrollContainer}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <TodayCards handleCardClick={handleCardClick} card={shineCard} />
+          {todayCards == undefined ? (
+            <Text style={styles.text}>오늘 받은 카드가 없어요!</Text>
+          ) : (
+            todayCards.map(card => (
+              <TodayCards
+                key={card.id}
+                handleCardClick={handleCardClick}
+                card={card.lovecardResponse}
+              />
+            ))
+          )}
         </ScrollView>
       </View>
     </View>
@@ -44,7 +46,13 @@ const styles = StyleSheet.create({
     color: '#383838',
   },
   scrollContainer: {
+    alignItems: 'center',
     flexDirection: 'row',
     marginTop: 16,
+    height: 210,
+  },
+  text: {
+    marginTop: 90,
+    color: '#C5C5C5',
   },
 });

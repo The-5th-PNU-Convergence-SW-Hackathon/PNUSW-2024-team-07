@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Image, Text, StyleSheet} from 'react-native';
+import mom from '../../../../assets/images/photocard/photocard2.png';
 
 export const FamilyPhotoCard = ({profile, snapshot}) => {
   return (
@@ -16,20 +17,12 @@ export const FamilyPhotoCard = ({profile, snapshot}) => {
           />
         </View>
       )}
-      <Image
-        source={{
-          uri: profile,
-        }}
-        style={styles.profile}
-      />
+      <Image source={{uri: profile}} style={styles.profile} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  backgroud: {
-    backgroundColor: 'rgba(151, 151, 151, 0.6)',
-  },
   profile: {
     position: 'absolute',
     top: 4,
@@ -37,14 +30,6 @@ const styles = StyleSheet.create({
     width: 38,
     height: 38,
     borderRadius: 50,
-  },
-  absolute: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
-    borderRadius: 6,
   },
   imgaeContainer: {
     width: '100%',
@@ -68,6 +53,6 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#CECECE',
+    color: '#C5C5C5',
   },
 });

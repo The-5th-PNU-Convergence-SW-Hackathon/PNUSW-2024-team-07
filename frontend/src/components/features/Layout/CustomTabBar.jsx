@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     marginLeft: 60,
   },
   loveCard: {
-    marginLeft: 54,
+    marginLeft: 52,
   },
   person: {
     marginLeft: 40,
