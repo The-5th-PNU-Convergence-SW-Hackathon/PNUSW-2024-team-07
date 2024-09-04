@@ -1,5 +1,7 @@
 package com.pinu.familing.domain.user.service;
 
+import com.pinu.familing.domain.chat.entity.ChatRoom;
+import com.pinu.familing.domain.chat.repository.ChatRoomRepository;
 import com.pinu.familing.domain.family.entity.Family;
 import com.pinu.familing.domain.family.repository.FamilyRepository;
 import com.pinu.familing.domain.snapshot.service.SnapshotService;
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Optional;
+
 import static com.pinu.familing.global.error.ExceptionCode.USER_NOT_FOUND;
 
 @Service
@@ -31,6 +35,7 @@ public class UserService {
     private final SnapshotService snapshotService;
     private final AwsS3Service awsS3Service;
     private final StatusRepository statusRepository;
+    private final ChatRoomRepository chatRoomRepository;
 
 
     public UserResponse giveUserInformation(String username) {
@@ -49,6 +54,10 @@ public class UserService {
         Family family = familyRepository.findByCode(code)
                 .orElseThrow(() -> new CustomException(ExceptionCode.INVALID_CODE));
 
+        ChatRoom chatRoom = chatRoomRepository.findByValidCode(family.getCode())
+                .orElseThrow(() -> new CustomException(ExceptionCode.CHATROOM_NOT_FOUND));
+
+        chatRoom.addUser(user);
         user.registerFamily(family);
         setDefaultStatusValue(user);
     }

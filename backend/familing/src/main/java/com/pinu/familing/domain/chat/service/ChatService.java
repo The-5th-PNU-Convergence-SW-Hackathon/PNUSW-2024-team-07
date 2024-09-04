@@ -39,7 +39,7 @@ public class ChatService {
     private final UserRepository userRepository;
 
     @Transactional
-    public boolean makeChatRoom(User user, String validCode) {
+    public boolean makeChatRoom(String validCode) {
         if (chatRoomRepository.findByValidCode(validCode).isPresent()) {
             throw new CustomException(CHATROOM_ALREADY_EXISTS);
         }
@@ -49,8 +49,6 @@ public class ChatService {
                 .validCode(validCode)
                 .users(new ArrayList<>())
                 .build();
-        // ChatRoom 객체에 User 추가
-        chatRoom.addUser(user);
         chatRoomRepository.save(chatRoom);
         return true;
     }
@@ -72,13 +70,14 @@ public class ChatService {
     //메시지 전송
     public void sendMessage(Message message, String username) {
 
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsernameWithChatRoom(username)
                 .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
         // message 객체에 보낸시간, 보낸사람 memberNo, 닉네임을 셋팅해준다.
         message.setSendTimeAndSenderAndRoomId(LocalDateTime.now(), user);
 
         Chatting chatting = message.convertEntity();
+        chatting.setSenderProfileImg(user.getProfileImg());
         // 채팅 내용을 저장한다.
         Chatting savedChat = mongoChatRepository.save(chatting);
         // 저장된 고유 ID를 반환한다.

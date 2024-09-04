@@ -23,7 +23,7 @@ public record MyFamilyStatusResponse(UserStatusResponse me,
 
 
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-    private record UserStatusResponse(String username,
+    public record UserStatusResponse(String username,
                                       String nickname,
                                       String imageUrl,
                                       String status) {

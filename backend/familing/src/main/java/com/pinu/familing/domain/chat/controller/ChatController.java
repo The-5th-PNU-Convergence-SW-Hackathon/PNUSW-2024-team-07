@@ -28,9 +28,9 @@ public class ChatController {
 
     // 자기 단톡방 채팅내역 조회
     @GetMapping("/chatroom/message")
-    public ResponseEntity<ChattingHistoryResponseDto> chattingList(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public ApiUtils.ApiResult<?> chattingList(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         ChattingHistoryResponseDto chattingList = chatService.getChattingList(principalDetails.getUsername());
-        return ResponseEntity.ok(chattingList);
+        return ApiUtils.success(chattingList);
     }
 
     // 자신의 채팅방 정보 조회

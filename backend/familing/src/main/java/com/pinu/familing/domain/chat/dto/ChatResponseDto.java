@@ -11,6 +11,7 @@ public record ChatResponseDto(
         String senderUsername,
         String contentType,
         String content,
+        String senderProfileImg,
         long sendDate,
         boolean isMine
 ) {
@@ -22,6 +23,7 @@ public record ChatResponseDto(
                 chatting.getSenderUsername(),
                 chatting.getContentType(),
                 chatting.getContent(),
+                chatting.getSenderProfileImg(),
                 chatting.getSendDate().atZone(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli(),
                 chatting.getSenderId().equals(userId)
         );

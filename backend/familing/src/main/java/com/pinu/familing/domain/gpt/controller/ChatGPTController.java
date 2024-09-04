@@ -4,6 +4,7 @@ package com.pinu.familing.domain.gpt.controller;
 import com.pinu.familing.domain.gpt.dto.ChatGPTResponse;
 import com.pinu.familing.domain.gpt.dto.ChatGptRequest;
 import com.pinu.familing.domain.gpt.dto.GptRequestMessage;
+import com.pinu.familing.global.util.ApiUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,7 +31,7 @@ public class ChatGPTController {
 
 
     @PostMapping("/chat")
-    public String requestGpt(@RequestBody String message) {
+    public ApiUtils.ApiResult<?> requestGpt(@RequestBody String message) {
         String responseContent = null;
         try {
             ChatGptRequest request = new ChatGptRequest(model, message);
@@ -41,7 +42,7 @@ public class ChatGPTController {
             e.printStackTrace();
         }
 
-        return responseContent;
+        return ApiUtils.success(responseContent);
     }
 
 

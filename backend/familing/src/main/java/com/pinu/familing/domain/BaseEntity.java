@@ -20,5 +20,8 @@ public abstract class BaseEntity {
     @LastModifiedDate
     private LocalDateTime modifiedDateTime;
 
+    public void createDateTimeForTestCode(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
 }
 
