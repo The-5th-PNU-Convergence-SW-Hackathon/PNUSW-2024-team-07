@@ -211,7 +211,8 @@ GPT 4o 비용 : 19500원(월)
 | **React Native CLI** | 2.0.1 |
 | **Node.js** | 20.12.0 |
 | **Android Studio** | 2023.2.1 |
-| **JDK** | 17 |
+| **Figma** | UI3 |
+| **illustrator** | CC2024 |
 
 # 3. 개발결과
 ## 3.1. 전체시스템 흐름도
