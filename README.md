@@ -640,7 +640,7 @@ familing-frontend
 
 # 5. 소개 및 시연 영상
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/womf95PNCCI?si=8IeAqvRxcb0he4On" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![YouTube Video](https://img.youtube.com/vi/womf95PNCCI/0.jpg)](https://www.youtube.com/watch?v=womf95PNCCI)
 
 # 6. 팀 소개
 
