@@ -1,4 +1,5 @@
-![image](https://github.com/user-attachments/assets/e12da0f7-7643-42a4-be89-38751d923b67)
+![image](https://github.com/user-attachments/assets/5d21a68e-50ff-4a69-8af0-7ac36ff6a458)
+
 
 <h1> 1. 가족 소통을 해결하는 애플리케이션, 패밀링  <img src= "https://github.com/user-attachments/assets/119d09f8-ecde-4882-aa77-753ee9a95142" width = 40></h1>
 
