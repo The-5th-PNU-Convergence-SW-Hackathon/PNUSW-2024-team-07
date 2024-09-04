@@ -639,7 +639,8 @@ familing-frontend
 [패밀링 다운로드 링크](https://www.notion.so/2f3091422296413b8e84090c15a19456?pvs=21) 
 
 # 5. 소개 및 시연 영상
-[링크 추가 예정]()
+
+[![Video Label](http://img.youtube.com/vi/womf95PNCCI/0.jpg)](https://youtu.be/womf95PNCCI)
 
 # 6. 팀 소개
 
